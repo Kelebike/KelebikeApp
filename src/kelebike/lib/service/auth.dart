@@ -7,9 +7,14 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //giriş yap fonksiyonu
-  Future<User?> signIn(String email, String password) async {
-    var user = await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
+  Future signIn(String email, String password) async {
+    var user;
+    try {
+      user = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      return e;
+    }
     return user.user;
   }
 

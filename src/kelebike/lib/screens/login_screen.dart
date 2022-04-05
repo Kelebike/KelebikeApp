@@ -2,6 +2,7 @@ import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/screens/sign_up_screen.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kelebike/utilities/constants.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class _LoginPageState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   AuthService _authService = AuthService();
+
+  var errorText = "Error!";
 
   @override
   Widget build(BuildContext context) {
@@ -98,15 +101,20 @@ class _LoginPageState extends State<LoginScreen> {
                     height: size.height * 0.08,
                   ),
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       _authService
                           .signIn(
                               _emailController.text, _passwordController.text)
                           .then((value) {
-                        return Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                        print(value);
+                        if (value == 'wrong-password') {
+                          return "Wrong";
+                        } else {
+                          return Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        }
                       });
                     },
                     child: Container(
