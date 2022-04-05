@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "445024813251",
+    "project_id": "kelebikeapp-d4165",
+    "storage_bucket": "kelebikeapp-d4165.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445024813251:android:098630080f06dc9ab3e276",
+        "android_client_info": {
+          "package_name": "com.bisquit.kelebike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445024813251-j7rrmhhqjafgmtbk0er3f1ukah5rb9dl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bisquit.kelebike",
+            "certificate_hash": "0bbde114bfffd2e75642878fe6148fe3f3279db5"
+          }
+        },
+        {
+          "client_id": "445024813251-f4gb2fq98gf7c31csplacellgr0i250r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxJGnj1FIiTB8taSmsRzftZdsbxA9CiIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445024813251-f4gb2fq98gf7c31csplacellgr0i250r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
