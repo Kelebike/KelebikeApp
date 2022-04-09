@@ -12,10 +12,10 @@ class AuthService {
     try {
       user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      return e;
+      return null;
+    } catch (e) {
+      return e.toString();
     }
-    return user.user;
   }
 
   //çıkış yap fonksiyonu

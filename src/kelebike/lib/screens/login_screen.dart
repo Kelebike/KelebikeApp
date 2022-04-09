@@ -2,7 +2,6 @@ import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/screens/sign_up_screen.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kelebike/utilities/constants.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,8 +13,6 @@ class _LoginPageState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   AuthService _authService = AuthService();
-
-  var errorText = "Error!";
 
   @override
   Widget build(BuildContext context) {
@@ -106,14 +103,30 @@ class _LoginPageState extends State<LoginScreen> {
                           .signIn(
                               _emailController.text, _passwordController.text)
                           .then((value) {
-                        print(value);
-                        if (value == 'wrong-password') {
-                          return "Wrong";
-                        } else {
-                          return Navigator.push(
+                        if (value == null) {
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomeScreen()));
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: new Text("Error!!"),
+                                content: new Text(
+                                    "The information you entered is incorrect. Please check your information and try again."),
+                                actions: <Widget>[
+                                  new FlatButton(
+                                    child: new Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       });
                     },
