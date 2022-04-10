@@ -224,6 +224,13 @@ class _LoginPageState extends State<LoginScreen> {
                             Navigator.of(context).pop();
                           },
                         ),
+                        new FlatButton(
+                          child: new Text("Resent verify mail."),
+                          onPressed: () {
+                            _user.sendEmailVerification();
+                            Navigator.of(context).pop();
+                          },
+                        ),
                       ],
                     );
                   },

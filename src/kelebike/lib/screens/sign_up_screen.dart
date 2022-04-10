@@ -132,7 +132,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 5.0,
         onPressed: () {
           if (_passwordController.text == _passswordAgainController.text &&
-              _emailController.text.indexOf('@gtu.edu.tr') != -1) {
+              _emailController.text.contains('@gtu.edu.tr') &&
+              _passwordController.text.length >= 6) {
             _authService
                 .createPerson(_emailController.text, _passwordController.text)
                 .then((value) {
@@ -159,7 +160,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
               }
             });
           } else {
-            print("SOmething went wrong!!!!");
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: new Text("Account couln't be created"),
+                  content: new Text(
+                      "Requirements:\n\t\t\t-Mail address must have @gtu.edu.tr extension.\n\t\t\t-Password must be at least 6 characters."),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           }
         },
         padding: EdgeInsets.all(15.0),
