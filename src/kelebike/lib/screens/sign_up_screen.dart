@@ -1,6 +1,7 @@
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/utilities/constants.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -9,8 +10,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  bool _rememberMe = false;
-
+  var _emailController = TextEditingController();
+  var _passwordController = TextEditingController();
+  var _passswordAgainController = TextEditingController();
+  bool _validatePass = false;
+  AuthService _authService = AuthService();
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -60,6 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _passwordController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -91,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _passswordAgainController,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -117,6 +124,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
+  Widget _buildSignUpBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+      width: double.infinity,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {
+          if (_passwordController.text == _passswordAgainController.text &&
+              _emailController.text.indexOf('@gtu.edu.tr') != -1) {
+            _authService
+                .createPerson(_emailController.text, _passwordController.text)
+                .then((value) {
+              if (value == null) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: new Text("Welcome to Kelebike"),
+                      content: new Text(
+                          "Verify email has been sent your email. Please check it!"),
+                      actions: <Widget>[
+                        new FlatButton(
+                          child: new Text("OK"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            navigateToSubPage(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            });
+          } else {
+            print("SOmething went wrong!!!!");
+          }
+        },
+        padding: EdgeInsets.all(15.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        color: Colors.white,
+        child: Text(
+          'SIGN UP',
+          style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildLoginBtn() {
     return GestureDetector(
       onTap: () => navigateToSubPage(context),
@@ -140,32 +204,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSignUpBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () => print('SignUp Button Pressed'),
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Text(
-          'SIGN UP',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
         ),
       ),
     );
