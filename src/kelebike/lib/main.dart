@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:kelebike/screens/authenticate.dart';
 import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';

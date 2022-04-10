@@ -16,6 +16,50 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     User? _user = FirebaseAuth.instance.currentUser;
     return Scaffold(
+      appBar: AppBar(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 243, 92, 4),
+        onPressed: () {
+          //TODO!
+        },
+        child: Icon(Icons.directions_bike),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text("Welcome!"),
+              accountEmail: Text(_user!.email.toString()),
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 243, 92, 4).withOpacity(1.0)),
+            ),
+            ListTile(
+              title: Text('Anasayfa'),
+              leading: Icon(Icons.home),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Profilim'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              leading: Icon(Icons.person),
+            ),
+            Divider(),
+            ListTile(
+              title: Text('Çıkış yap'),
+              onTap: () {
+                print("sign out!!!");
+                Navigator.pop(context);
+              },
+              leading: Icon(Icons.door_sliding),
+            ),
+          ],
+        ),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -59,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(_user!.email.toString()),
+                      Text(_user.email.toString()),
                       SizedBox(height: 30.0),
                       SizedBox(height: 30.0),
                       SizedBox(
