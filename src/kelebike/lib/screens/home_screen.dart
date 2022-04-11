@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelebike/screens/profile_screen.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/utilities/constants.dart';
 
@@ -18,7 +19,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     User? _user = FirebaseAuth.instance.currentUser;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(
+          'Bikepage',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'OpenSans',
+            fontSize: 22.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 243, 92, 4),
         onPressed: () {
@@ -37,18 +48,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Color.fromARGB(255, 243, 92, 4).withOpacity(1.0)),
             ),
             ListTile(
-              title: Text('Anasayfa'),
-              leading: Icon(Icons.home),
+              title: Text('Bikepage'),
+              leading: Icon(Icons.pedal_bike),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text('Profilim'),
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
+              },
+              leading: Icon(Icons.person),
+            ),
+            ListTile(
+              title: Text('History'),
               onTap: () {
                 Navigator.pop(context);
               },
-              leading: Icon(Icons.person),
+              leading: Icon(Icons.history),
             ),
             Divider(),
             ListTile(
@@ -56,11 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 _authService.signOut();
                 Navigator.pop(context);
+                Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginScreen()));
                 _user = null;
               },
-              leading: Icon(Icons.door_sliding),
+              leading: Icon(Icons.exit_to_app),
             ),
           ],
         ),
@@ -79,10 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
+                      Color.fromARGB(255, 176, 201, 233),
+                      Color.fromARGB(255, 176, 195, 217),
+                      Color.fromARGB(255, 214, 222, 231),
+                      Color.fromARGB(255, 255, 255, 255),
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
@@ -99,16 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Login successfull!!',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(_user!.email.toString()),
                       SizedBox(height: 30.0),
                       SizedBox(height: 30.0),
                       SizedBox(
