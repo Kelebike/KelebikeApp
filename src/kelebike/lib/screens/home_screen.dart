@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/utilities/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AuthService _authService = AuthService();
   bool _rememberMe = false;
 
   @override
@@ -50,10 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Divider(),
             ListTile(
-              title: Text('Çıkış yap'),
+              title: Text('Sign out'),
               onTap: () {
-                print("sign out!!!");
+                _authService.signOut();
                 Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                _user = null;
               },
               leading: Icon(Icons.door_sliding),
             ),
@@ -103,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(_user.email.toString()),
+                      Text(_user!.email.toString()),
                       SizedBox(height: 30.0),
                       SizedBox(height: 30.0),
                       SizedBox(
