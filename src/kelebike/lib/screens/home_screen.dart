@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/login_screen.dart';
+import 'package:kelebike/screens/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kelebike/screens/profile_screen.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/utilities/constants.dart';
 
@@ -20,15 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
     User? _user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Bikepage',
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'OpenSans',
-            fontSize: 22.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 0,
+        title: Text("Kelebike"),
+        centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 243, 92, 4),
@@ -55,18 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()));
-              },
-              leading: Icon(Icons.person),
-            ),
-            ListTile(
               title: Text('History'),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HistoryScreen()));
               },
               leading: Icon(Icons.history),
             ),
@@ -120,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Text("Berkay baygut adamdır!"),
                       SizedBox(height: 30.0),
                       SizedBox(height: 30.0),
                       SizedBox(
