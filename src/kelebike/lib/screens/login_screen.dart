@@ -300,12 +300,12 @@ class _LoginPageState extends State<LoginScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color(0xFF73AEF5),
-                  Color.fromARGB(255, 80, 153, 236),
-                  Color.fromARGB(255, 204, 139, 42),
-                  Color.fromARGB(255, 240, 109, 15),
+                  Color.fromARGB(255, 193, 213, 236),
+                  Color.fromARGB(255, 104, 163, 231),
+                  Color.fromARGB(255, 85, 153, 230),
+                  Color.fromARGB(255, 241, 103, 4),
                 ],
-                stops: [0.1, 0.4, 0.7, 0.9],
+                stops: [0.1, 0.4, 0.6, 0.9],
               ),
             ),
           ),
@@ -315,11 +315,13 @@ class _LoginPageState extends State<LoginScreen> {
               physics: AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
                 horizontal: 40.0,
-                vertical: 120.0,
+                vertical: 40.0,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Image.asset('assets/logos/logo_transparent.png',
+                      fit: BoxFit.fitHeight),
                   Text(
                     'Login',
                     style: TextStyle(
@@ -338,7 +340,7 @@ class _LoginPageState extends State<LoginScreen> {
                   ),
                   _buildLoginBtn(),
                   SizedBox(
-                    height: size.height * 0.15,
+                    height: size.height * 0.05,
                   ),
                   _buildForgotPasswordBtn(),
                   SizedBox(

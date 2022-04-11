@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:kelebike/screens/home_screen.dart';
-import 'package:kelebike/screens/welcome_screen.dart';
+import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kelebike',
       debugShowCheckedModeBanner: false,
-      home: loggedIn ? HomeScreen() : WelcomeScreen(),
+      home: loggedIn ? HomeScreen() : LoginScreen(),
     );
   }
 }
