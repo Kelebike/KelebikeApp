@@ -120,6 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future navigateToSubPage(context) async {
+    Navigator.of(context).pop();
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }

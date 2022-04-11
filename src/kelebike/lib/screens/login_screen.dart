@@ -96,13 +96,16 @@ class _LoginPageState extends State<LoginScreen> {
   }
 
   Future navigateToSubPage(context) async {
+    Navigator.of(context).pop();
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SignUpScreen()));
   }
 
   Widget _buildSignUpBtn() {
     return GestureDetector(
-      onTap: () => navigateToSubPage(context),
+      onTap: () {
+        navigateToSubPage(context);
+      },
       child: RichText(
         text: TextSpan(
           children: [
@@ -298,9 +301,9 @@ class _LoginPageState extends State<LoginScreen> {
                 end: Alignment.bottomCenter,
                 colors: [
                   Color(0xFF73AEF5),
-                  Color(0xFF61A4F1),
-                  Color(0xFF478DE0),
-                  Color(0xFF398AE5),
+                  Color.fromARGB(255, 80, 153, 236),
+                  Color.fromARGB(255, 204, 139, 42),
+                  Color.fromARGB(255, 240, 109, 15),
                 ],
                 stops: [0.1, 0.4, 0.7, 0.9],
               ),
