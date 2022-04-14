@@ -22,3 +22,15 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+final bikeCodeDecorationStyle = BoxDecoration(
+  color: Color.fromARGB(255, 241, 103, 4),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);

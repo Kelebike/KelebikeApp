@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:kelebike/screens/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kelebike/screens/take_bike_page.dart';
 import 'package:kelebike/service/auth.dart';
+import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     User? _user = FirebaseAuth.instance.currentUser;
+    BikeService _bikeService = BikeService();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
@@ -27,8 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 243, 92, 4),
-        onPressed: () {
-          //TODO!
+        onPressed: () async {
+          if (await _bikeService.findWithMail(_user!.email.toString()) == 1) {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                      title: Text('Error'),
+                      content: Text('You already have a request.'),
+                    ));
+          } else {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TakeBikePage()));
+          }
         },
         child: Icon(Icons.directions_bike),
       ),
@@ -74,54 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 176, 201, 233),
-                      Color.fromARGB(255, 176, 195, 217),
-                      Color.fromARGB(255, 214, 222, 231),
-                      Color.fromARGB(255, 255, 255, 255),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Berkay baygut adamdır!"),
-                      SizedBox(height: 30.0),
-                      SizedBox(height: 30.0),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+      body: BikePage(),
     );
   }
 }
