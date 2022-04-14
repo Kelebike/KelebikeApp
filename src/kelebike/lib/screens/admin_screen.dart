@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/admin_bikes_screen.dart';
+import 'package:kelebike/screens/admin_requests_screen.dart';
 import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:kelebike/screens/history_screen.dart';
@@ -43,7 +44,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     ));
           } else {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TakeBikePage()));
+                MaterialPageRoute(builder: (context) => RequestScreen()));
           }
         },
         child: Icon(Icons.call_received),
@@ -81,6 +82,8 @@ class _AdminScreenState extends State<AdminScreen> {
               leading: Icon(Icons.info),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RequestScreen()));
               },
             ),
             ListTile(
@@ -108,7 +111,121 @@ class _AdminScreenState extends State<AdminScreen> {
           ],
         ),
       ),
-      // body: BikePage(), TO DO!!
+      body: Container(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.0,
+            vertical: 40,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new Container(
+                width: double.infinity,
+                height: 100,
+                decoration: kBoxDecorationStyle,
+                padding: new EdgeInsets.only(top: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.pedal_bike, color: Colors.white),
+                    new Text(
+                      'Total Bicycle: ',
+                      style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'OpenSans',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              new Container(
+                width: double.infinity,
+                height: 100,
+                decoration: kBoxDecorationStyle,
+                padding: new EdgeInsets.only(top: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.info, color: Colors.white),
+                    new Text(
+                      'Number Of Request:',
+                      style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'OpenSans',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              new Container(
+                width: double.infinity,
+                height: 100,
+                decoration: kBoxDecorationStyle,
+                padding: new EdgeInsets.only(top: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.autorenew, color: Colors.white),
+                    new Text(
+                      'Bicycles In Circulation:',
+                      style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'OpenSans',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              new Container(
+                width: double.infinity,
+                height: 100,
+                decoration: kBoxDecorationStyle,
+                padding: new EdgeInsets.only(top: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.build,
+                      color: Colors.white,
+                    ),
+                    new Text(
+                      'Bicycles In Renovation:',
+                      style: new TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'OpenSans',
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
