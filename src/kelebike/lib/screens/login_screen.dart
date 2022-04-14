@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:kelebike/screens/admin_screen.dart';
 import 'package:kelebike/screens/sign_up_screen.dart';
 import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/service/auth.dart';
@@ -239,8 +240,13 @@ class _LoginPageState extends State<LoginScreen> {
                   },
                 );
               } else {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                if (_user.email == "berkaybaygut@gmail.com") {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => AdminScreen()));
+                } else {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                }
               }
             } else {
               showDialog(

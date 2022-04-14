@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kelebike/screens/admin_screen.dart';
 import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Widget startPage = HomeScreen();
     _bikeService.addBike(
         code: '0824',
         serialNumber: '00002',
@@ -45,15 +47,18 @@ class MyApp extends StatelessWidget {
         dateIssued: 'nontaken',
         dateReturn: 'nontaken',
         owner: 'berkay');
+
     if (_user == null || !_user!.emailVerified) {
-      loggedIn = false;
+      startPage = LoginScreen();
+    } else if (_user!.email == "berkaybaygut@gmail.com") {
+      startPage = AdminScreen();
     } else {
-      loggedIn = true;
+      startPage = HomeScreen();
     }
     return MaterialApp(
       title: 'Kelebike',
       debugShowCheckedModeBanner: false,
-      home: loggedIn ? HomeScreen() : LoginScreen(),
+      home: startPage,
     );
   }
 }
