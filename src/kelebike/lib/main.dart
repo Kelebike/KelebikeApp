@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         dateIssued: 'nontaken',
         dateReturn: 'nontaken',
         owner: 'berkay');
-    if (_user == null) {
+    if (_user == null || !_user!.emailVerified) {
       loggedIn = false;
     } else {
       loggedIn = true;

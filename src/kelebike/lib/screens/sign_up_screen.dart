@@ -13,8 +13,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
   var _passswordAgainController = TextEditingController();
+  var _CheckBoxController = TextEditingController();
   bool _validatePass = false;
   AuthService _authService = AuthService();
+  bool isChecked = false;
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,6 +202,82 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  Widget _buildCheckBox() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      width: double.infinity,
+      height: 60,
+      child: CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Color(0xFF527DAA),
+        activeColor: Colors.white,
+        value: isChecked,
+        onChanged: (isChecked) {
+          setState(() {
+            this.isChecked = isChecked!;
+            if (isChecked == true) {
+              String textFromFile;
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    contentPadding: EdgeInsets.only(left: 25, right: 25),
+                    title: Center(child: Text("Bisklet Teslim Tutanağı")),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    content: Container(
+                      height: 300,
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Text(
+                                "Sağlık ve Spor Dairesi Başkanlığı Bisiklet Birimi tarafından verilen ve markası, modeli ve seri numarası kayıtlı bisikleti eksiksiz ve sağlam olarak teslim aldım.Bakım, onarım veya sayım gibi nedenlerle istenilen tarihte aldığım şekilde teslim edeceğim."),
+                            Text(
+                              "Bisiklet Teslim Şartları",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                                "1- Bisiklet kullanımı için geçici tahsis süresi 5 (beş) iş günüdür. Kullanım süresinin uzatılması durumunda kayıt yenileme işlemi tekrar yapılacaktır.  Bu işlemi yapmayan kişiye bir daha bisiklet verilmeyecektir. Bisikletler Sağlık, Kültür ve Spor Dairesi Başkanlığı Bisiklet Birimine eksiksiz teslim edilecektir"),
+                            Text(
+                                "2- Öğrenci/personel bisikleti ancak kendi adına alabilir. Bir başka kişi adına bisiklet alınması ve işlem yapılması yasaktır. Kendi kullanımı için sadece bir bisiklet alabilir"),
+                            Text(
+                                "3- Öğrenci/personel teslim aldığı bisikleti teslim edeceği tarihte tüm aksesuarları ile eksiksiz, sağlam ve çalışır durumda teslim edecektir"),
+                            Text(
+                                "4- Öğrenci/personel teslim aldığı bisikleti üçüncü bir şahsa ödünç veremez, kiralayamaz veya satamaz"),
+                            Text(
+                                "5- Öğrenci/personel teslim aldığı bisikletin güvenliğinden sorumludur. Kaybolan bisikletin değerini tazmin etmek ya da yerine eş değerde yenisini alıp teslim etmekle yükümlüdür."),
+                            Text(
+                                "6- Öğrenci/personelin Bisiklet Kullanım Kuralları yönergesi ve Şehirlerde Güvenli Bisiklet Kullanma Kılavuzu kurallarına göre uygun kullanacaktır."),
+                            Text(
+                                "7- Kullanıcı hatasından kaynaklandığı tespit edilen durumlarda sürüş kuralları ve güvenlik açıklamalarına ve “Şehirlerde Güvenli Bisiklet Kullanma Kılavuzu”ndaki kurallara uygun olmayan kullanımlardan dolayı oluşacak kazalar ve her türlü maddi, manevi zararlar, bisikletlerde meydana gelebilecek her türlü arıza ve onarım giderleri ile ilgili tüm masraflar kullanıcıdan tahsil edilecektir.  Hakkında ilgili mevzuat ve yönerge uyarınca işlem yapılır.")
+                          ],
+                        ),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          });
+        },
+        title: Text(
+          'I have read and accept the bike delivery terms.',
+          style: TextStyle(color: Colors.white, fontSize: 15),
+        ),
+      ),
+    );
+  }
+
   Widget _buildLoginBtn() {
     return GestureDetector(
       onTap: () => navigateToSubPage(context),
@@ -260,7 +338,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 40.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -280,8 +358,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       _buildPasswordTF(),
                       _buildPasswordAgainTF(),
                       SizedBox(
-                        height: 30.0,
+                        height: 25.0,
                       ),
+                      _buildCheckBox(),
                       _buildSignUpBtn(),
                       _buildLoginBtn(),
                     ],
