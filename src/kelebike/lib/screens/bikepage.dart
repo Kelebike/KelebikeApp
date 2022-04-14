@@ -9,6 +9,17 @@ class BikePage extends StatefulWidget {
 
 class _BikePageState extends State<BikePage> {
   BikeService _bikeService = BikeService();
+  Color isTaken(String taken) {
+    if (taken == "taken") {
+      return Colors.red;
+    } else if (taken == "waiting") {
+      return Colors.yellow;
+    } else if (taken == "nontaken") {
+      return Colors.green;
+    } else {
+      return Colors.yellow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +91,7 @@ class _BikePageState extends State<BikePage> {
                         _showChoiseDialog(context);
                       },
                       child: Container(
-                        height: size.height * .3,
+                        height: size.height * .1,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: Colors.blue, width: 2),
@@ -88,20 +99,26 @@ class _BikePageState extends State<BikePage> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Text("Code: "),
                               Text(
-                                "${mypost['code']}",
+                                "${mypost['code']} ",
                                 style: TextStyle(fontSize: 16),
                                 textAlign: TextAlign.center,
                               ),
+                              Text(" Brand: "),
                               Text("${mypost['brand']}"),
+                              Text("   Serial Number: "),
                               Text("${mypost['serialNumber']}"),
-                              Text("${mypost['owner']}"),
                               SizedBox(
                                 height: 10,
                               ),
+                              Icon(
+                                Icons.circle,
+                                color: isTaken("${mypost['status']}"),
+                              )
                             ],
                           ),
                         ),

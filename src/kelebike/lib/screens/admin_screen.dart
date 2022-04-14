@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kelebike/screens/admin_bikes_screen.dart';
 import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:kelebike/screens/history_screen.dart';
@@ -69,8 +70,10 @@ class _AdminScreenState extends State<AdminScreen> {
               leading: Icon(Icons.pedal_bike),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BikePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AdminBikesScreen()));
               },
             ),
             ListTile(

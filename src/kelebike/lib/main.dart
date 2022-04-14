@@ -29,24 +29,7 @@ class MyApp extends StatelessWidget {
         status: 'nontaken',
         dateIssued: 'nontaken',
         dateReturn: 'nontaken',
-        owner: 'ahmet');
-    _bikeService.addBike(
-        code: '0829',
-        serialNumber: '00002',
-        brand: 'GTU',
-        status: 'nontaken',
-        dateIssued: 'nontaken',
-        dateReturn: 'nontaken',
-        owner: 'emirhan');
-
-    _bikeService.addBike(
-        code: '0839',
-        serialNumber: '00002',
-        brand: 'GTU',
-        status: 'nontaken',
-        dateIssued: 'nontaken',
-        dateReturn: 'nontaken',
-        owner: 'berkay');
+        owner: 'nontaken');
 
     if (_user == null || !_user!.emailVerified) {
       startPage = LoginScreen();
