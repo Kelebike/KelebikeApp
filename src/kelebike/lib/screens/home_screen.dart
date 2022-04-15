@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Kelebike"),
         centerTitle: true,

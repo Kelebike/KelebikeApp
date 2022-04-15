@@ -53,7 +53,7 @@ class _RequestsState extends State<Requests> {
                           height: size.height * .3,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.blue, width: 2),
+                              border: Border.all(color: Color(0xFF6CA8F1), width: 2),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           child: Padding(

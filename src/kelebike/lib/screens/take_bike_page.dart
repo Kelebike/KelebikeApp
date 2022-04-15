@@ -55,7 +55,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Take a bike"),
         centerTitle: true,

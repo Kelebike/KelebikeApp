@@ -177,7 +177,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Add Bike"),
         centerTitle: true,

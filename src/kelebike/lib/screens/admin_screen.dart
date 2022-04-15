@@ -29,7 +29,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: const Text("Admin Panel"),
         centerTitle: true,

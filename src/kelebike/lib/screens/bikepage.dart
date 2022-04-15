@@ -64,7 +64,7 @@ class _BikePageState extends State<BikePage> {
                                         child: Text(
                                           "Evet",
                                           style: TextStyle(
-                                              color: Colors.blue,
+                                              color: Color(0xFF6CA8F1),
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -75,7 +75,7 @@ class _BikePageState extends State<BikePage> {
                                         child: Text(
                                           "Vazgeç",
                                           style: TextStyle(
-                                              color: Colors.blue,
+                                              color: Color(0xFF6CA8F1),
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -94,7 +94,8 @@ class _BikePageState extends State<BikePage> {
                         height: size.height * .1,
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(color: Colors.blue, width: 2),
+                            border:
+                                Border.all(color: Color(0xFF6CA8F1), width: 2),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: Padding(
