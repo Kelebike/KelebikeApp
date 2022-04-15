@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/admin_add_bike_page.dart';
 import 'package:kelebike/screens/admin_requests.dart';
+import 'package:kelebike/screens/admin_returns.dart';
 import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,23 +9,17 @@ import 'package:flutter/services.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/utilities/constants.dart';
 
-class RequestScreen extends StatefulWidget {
+class ReturnPage extends StatefulWidget {
   @override
-  _RequestScreenState createState() => _RequestScreenState();
+  _ReturnPageState createState() => _ReturnPageState();
 }
 
-class _RequestScreenState extends State<RequestScreen> {
+class _ReturnPageState extends State<ReturnPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
-        elevation: 0,
-        title: Text("All of the Requests"),
-        centerTitle: true,
-      ),
-      body: Requests(),
+      body: Return(),
     );
   }
 }

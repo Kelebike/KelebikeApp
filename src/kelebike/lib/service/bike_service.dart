@@ -118,4 +118,22 @@ class BikeService {
         });
     return flag;
   }
+
+  Future<bool> confirmTakingBike(
+      String docId, String issued, String returned) async {
+    bool flag = true;
+    var ref = _firestore
+        .collection("Bike")
+        .doc(docId)
+        .update({
+          'status': "taken",
+          'issued': issued,
+          'return': returned,
+        })
+        .then((_) => print('Updated'))
+        .catchError((error) {
+          flag = false;
+        });
+    return flag;
+  }
 }

@@ -3,6 +3,7 @@ import 'package:kelebike/model/bike.dart';
 import 'package:kelebike/screens/admin_bikes_screen.dart';
 import 'package:kelebike/screens/admin_info_page.dart';
 import 'package:kelebike/screens/admin_requests_screen.dart';
+import 'package:kelebike/screens/admin_return_screen.dart';
 import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:kelebike/screens/history_screen.dart';
@@ -35,18 +36,9 @@ class _AdminScreenState extends State<AdminScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 243, 92, 4),
-        onPressed: () async {
-          if (await _bikeService.findWithMail(_user!.email.toString()) == 1) {
-            showDialog(
-                context: context,
-                builder: (_) => const AlertDialog(
-                      title: const Text('Error'),
-                      content: Text('You already have a request.'),
-                    ));
-          } else {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RequestScreen()));
-          }
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ReturnPage()));
         },
         child: const Icon(Icons.call_received),
       ),
