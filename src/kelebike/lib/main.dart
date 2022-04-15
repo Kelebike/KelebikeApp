@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget startPage = HomeScreen();
     _bikeService.addBike(
-        code: '0824',
+        code: '0826',
         serialNumber: '00002',
-        brand: 'GTU',
-        status: 'nontaken',
+        brand: 'SALCANO',
+        status: 'taken',
         dateIssued: 'nontaken',
         dateReturn: 'nontaken',
         owner: 'nontaken');

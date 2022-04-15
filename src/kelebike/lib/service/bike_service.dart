@@ -47,7 +47,6 @@ class BikeService {
   //Bike göstermek için
   Stream<QuerySnapshot> getBike() {
     var ref = _firestore.collection("Bike").snapshots();
-
     return ref;
   }
 
@@ -80,6 +79,26 @@ class BikeService {
         .collection("Bike")
         .where('owner', isEqualTo: owner)
         .get();
+    return query.docs.length;
+  }
+
+  Future<int>? totalBike() async {
+    QuerySnapshot query =
+        await FirebaseFirestore.instance.collection("Bike").get();
+    if (query.docs.isEmpty) {
+      return 0;
+    }
+    return query.docs.length;
+  }
+
+  Future<int>? findWithStatus(String status) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('status', isEqualTo: status)
+        .get();
+    if (query.docs.isEmpty) {
+      return 0;
+    }
     return query.docs.length;
   }
 
