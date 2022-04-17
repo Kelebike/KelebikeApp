@@ -22,7 +22,7 @@ Widget _buildBikeCode() {
         alignment: Alignment.centerLeft,
         decoration: bikeCodeDecorationStyle,
         height: 60.0,
-        width: 130.0,
+        width: double.infinity,
         child: TextField(
           controller: _bikeCodeController,
           keyboardType: TextInputType.phone,
@@ -68,12 +68,20 @@ class _TakeBikePageState extends State<TakeBikePage> {
                   child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 50, left: 20),
+                    padding:
+                        const EdgeInsets.only(top: 100, left: 20, right: 20),
                     child: _buildBikeCode(),
                   ),
                 ],
               )),
+              SizedBox(height: 20),
               ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Color(0xFF6CA8F1)),
+                    padding: MaterialStateProperty.all(EdgeInsets.all(20)),
+                    textStyle:
+                        MaterialStateProperty.all(TextStyle(fontSize: 15))),
                 onPressed: () async {
                   bool a = await _bikeService.takeBike(
                       _bikeCodeController.text, _user!.email.toString());
