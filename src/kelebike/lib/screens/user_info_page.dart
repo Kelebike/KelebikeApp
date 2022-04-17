@@ -22,6 +22,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   Widget _buildAvailable() {
+    var size = MediaQuery.of(context).size;
     return StreamBuilder(
         stream: _bikeService.getBike(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -32,7 +33,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
           if (snapshot.connectionState == ConnectionState.done) {}
 
           return Container(
-            height: double.infinity,
+            color: Colors.blueAccent,
+            height: size.height * 0.5,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(
@@ -48,8 +50,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     decoration: kBoxDecorationStyle,
                     padding: const EdgeInsets.only(top: 16),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Align(
                             child: Icon(Icons.pedal_bike, color: Colors.white)),
@@ -113,70 +115,192 @@ class _UserInfoPageState extends State<UserInfoPage> {
       builder: (context, snaphot) {
         return !snaphot.hasData
             ? CircularProgressIndicator()
-            : ListView.builder(
-                itemCount: snaphot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot mypost = snaphot.data!.docs[index];
-                  if ("${mypost['owner']}" == _user!.email.toString() &&
-                      "${mypost['status']}" == "taken") {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        child: Container(
-                          height: size.height * .3,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                  color: Color(0xFF6CA8F1), width: 2),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("MyBike: "),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Code: "),
-                                      Text(
-                                        "${mypost['code']} ",
-                                        style: TextStyle(fontSize: 16),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ]),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(" Brand: "),
-                                      Text("${mypost['brand']}"),
-                                    ]),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("   Serial Number: "),
-                                      Text("${mypost['serialNumber']}"),
-                                    ]),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("   Account: "),
-                                      Text("${mypost['owner']}"),
-                                    ]),
-                                SizedBox(
-                                  height: 10,
+            : Column(
+                children: [
+                  Container(
+                    height: size.height * 0.4,
+                    color: Colors.orange,
+                    child: ListView.builder(
+                        itemCount: snaphot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot mypost = snaphot.data!.docs[index];
+                          if ("${mypost['owner']}" == _user!.email.toString() &&
+                              "${mypost['status']}" == "taken") {
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: InkWell(
+                                child: Container(
+                                  height: size.height * .3,
+                                  decoration: kBoxDecorationStyle,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "MyBike: ",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            fontFamily: 'OpenSans',
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(""),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "Code: ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${mypost['code']} ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ]),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                " Brand: ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${mypost['brand']}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ]),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "   Serial Number: ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${mypost['serialNumber']}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ]),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "   Account: ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${mypost['owner']}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ]),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "   Issued Date: ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${mypost['issued']}"
+                                                    .substring(0, 11),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ]),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "   Expired Date: ",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${mypost['return']}"
+                                                    .substring(0, 10),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  fontFamily: 'OpenSans',
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ]),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  } else {
-                    return Text("");
-                  }
-                });
+                              ),
+                            );
+                          }
+                          return SizedBox.shrink();
+                        }),
+                  ),
+                  _buildAvailable(),
+                ],
+              );
       },
     );
   }

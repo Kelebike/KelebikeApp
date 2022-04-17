@@ -53,7 +53,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF6CA8F1),
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
@@ -78,7 +78,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all(Color(0xFF6CA8F1)),
+                        MaterialStateProperty.all(Color(0xFF6F35A5)),
                     padding: MaterialStateProperty.all(EdgeInsets.all(20)),
                     textStyle:
                         MaterialStateProperty.all(TextStyle(fontSize: 15))),
