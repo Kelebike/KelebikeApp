@@ -34,7 +34,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
           return Container(
             color: Colors.blueAccent,
-            height: size.height * 0.5,
+            height: size.height * 0.49,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(
