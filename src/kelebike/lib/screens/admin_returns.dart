@@ -83,8 +83,8 @@ class _ReturnState extends State<Return> {
                     textStyle:
                         MaterialStateProperty.all(TextStyle(fontSize: 15))),
                 onPressed: () async {
-                  bool a = await _bikeService.takeBike(
-                      _bikeCodeController.text, _user!.email.toString());
+                  bool a =
+                      await _bikeService.returnBike(_bikeCodeController.text);
 
                   if (await _bikeService
                           .findWithBikeCode(_bikeCodeController.text) ==
@@ -99,7 +99,7 @@ class _ReturnState extends State<Return> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text("Send request"),
+                child: Text("Take back the bike"),
               )
             ],
           ),

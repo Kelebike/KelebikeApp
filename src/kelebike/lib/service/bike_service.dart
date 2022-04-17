@@ -74,6 +74,15 @@ class BikeService {
     return query.docs.first.id;
   }
 
+  Future<String?> findWithEmail(String code) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('owner', isEqualTo: code)
+        .get();
+    if (query.docs.isEmpty) return null;
+    return query.docs.first.id;
+  }
+
   Future<int> findWithMail(String owner) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
@@ -131,6 +140,24 @@ class BikeService {
           'return': returned,
         })
         .then((_) => print('Updated'))
+        .catchError((error) {
+          flag = false;
+        });
+    return flag;
+  }
+
+  Future<bool> returnBike(String bikeCode) async {
+    bool flag = true;
+    var ref = _firestore
+        .collection("Bike")
+        .doc(await findWithBikeCode(bikeCode))
+        .update({
+          'status': "nontaken",
+          'issued': "nontaken",
+          'return': "nontaken",
+          'owner': "nontaken",
+        })
+        .then((_) => print('Returned'))
         .catchError((error) {
           flag = false;
         });

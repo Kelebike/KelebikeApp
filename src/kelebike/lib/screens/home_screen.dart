@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/login_screen.dart';
@@ -5,6 +6,7 @@ import 'package:kelebike/screens/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/screens/take_bike_page.dart';
+import 'package:kelebike/screens/user_info_page.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
@@ -89,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: BikePage(),
+      body: UserInfoPage(),
     );
   }
 }

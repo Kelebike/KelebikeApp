@@ -22,15 +22,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget startPage = HomeScreen();
-    _bikeService.addBike(
-        code: '0826',
-        serialNumber: '00002',
-        brand: 'SALCANO',
-        status: 'taken',
-        dateIssued: 'nontaken',
-        dateReturn: 'nontaken',
-        owner: 'nontaken');
-
     if (_user == null || !_user!.emailVerified) {
       startPage = LoginScreen();
     } else if (_user!.email == "berkaybaygut@gmail.com") {
