@@ -47,7 +47,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.circle,
+                Icons.numbers,
                 color: Colors.white,
               ),
               hintText: 'Serial No',
@@ -85,7 +85,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.circle,
+                Icons.bike_scooter,
                 color: Colors.white,
               ),
               hintText: 'Brand',
@@ -123,7 +123,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.circle,
+                Icons.qr_code,
                 color: Colors.white,
               ),
               hintText: 'Code',
