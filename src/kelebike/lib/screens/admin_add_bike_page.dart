@@ -150,6 +150,8 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               dateIssued: 'nontaken',
               dateReturn: 'nontaken',
               owner: 'nontaken');
+          Navigator.pop(context);
+          Navigator.pop(context);
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AdminBikesScreen()));
         },

@@ -109,10 +109,8 @@ class _BikePageState extends State<BikePage> {
                                 style: TextStyle(fontSize: 16),
                                 textAlign: TextAlign.center,
                               ),
-                              Text(" Brand: "),
-                              Text("${mypost['brand']}"),
-                              Text("   Serial Number: "),
-                              Text("${mypost['serialNumber']}"),
+                              Text("   Owner: "),
+                              Text("${mypost['owner']}"),
                               SizedBox(
                                 height: 10,
                               ),
