@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kelebike/utilities/constants.dart';
 
 class QRScannerOverlay extends StatelessWidget {
   const QRScannerOverlay({Key? key, required this.overlayColour})
@@ -8,6 +9,7 @@ class QRScannerOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _bikeCodeController = TextEditingController();
     double scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
         ? 200.0
@@ -45,6 +47,30 @@ class QRScannerOverlay extends StatelessWidget {
           child: SizedBox(
             width: scanArea + 25,
             height: scanArea + 25,
+          ),
+        ),
+      ),
+      Container(
+        alignment: Alignment.centerLeft,
+        decoration: bikeCodeDecorationStyle,
+        height: 60.0,
+        width: 130.0,
+        child: TextField(
+          controller: _bikeCodeController,
+          keyboardType: TextInputType.phone,
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'OpenSans',
+          ),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.only(top: 14.0),
+            prefixIcon: Icon(
+              Icons.qr_code,
+              color: Colors.white,
+            ),
+            hintText: 'bike code',
+            hintStyle: kHintTextStyle,
           ),
         ),
       ),

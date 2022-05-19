@@ -74,6 +74,17 @@ class BikeService {
     return query.docs.first.id;
   }
 
+  Future<String?> isThisBikeTaken(String code) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('code', isEqualTo: code)
+        .where('status', isEqualTo: "nontaken")
+        .get();
+
+    if (query.docs.isEmpty) return null;
+    return query.docs.first.id;
+  }
+
   Future<String?> findWithEmail(String code) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")

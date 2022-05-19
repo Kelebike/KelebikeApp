@@ -88,13 +88,20 @@ class _TakeBikePageState extends State<TakeBikePage> {
                           title: Text('Error'),
                           content: Text('Bike not found!'),
                         ));
+              } else if (await _bikeService.isThisBikeTaken(_barcode) == null) {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Error'),
+                          content: Text('This bike is already taken!'),
+                        ));
               } else {
                 _bikeService.takeBike(_barcode, _user!.email.toString());
                 Navigator.pop(context);
               }
             },
           ),
-          QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.5))
+          QRScannerOverlay(overlayColour: Colors.orange.withOpacity(1.0))
         ],
       ),
     );
