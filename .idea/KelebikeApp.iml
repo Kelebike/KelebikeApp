@@ -13,8 +13,12 @@
       <excludeFolder url="file://$MODULE_DIR$/App/build" />
       <excludeFolder url="file://$MODULE_DIR$/App/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/App/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/src/kelebike/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/src/kelebike/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/src/kelebike/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 32 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
   </component>
 </module>
