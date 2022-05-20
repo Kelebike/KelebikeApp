@@ -95,9 +95,7 @@ class _ReturnState extends State<Return> {
                               title: Text('Error'),
                               content: Text('Bike not found!'),
                             ));
-                  } else {
-                    Navigator.pop(context);
-                  }
+                  } else {}
                 },
                 child: Text("Take back the bike"),
               )

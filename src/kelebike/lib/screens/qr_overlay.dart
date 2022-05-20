@@ -50,30 +50,6 @@ class QRScannerOverlay extends StatelessWidget {
           ),
         ),
       ),
-      Container(
-        alignment: Alignment.centerLeft,
-        decoration: bikeCodeDecorationStyle,
-        height: 60.0,
-        width: 130.0,
-        child: TextField(
-          controller: _bikeCodeController,
-          keyboardType: TextInputType.phone,
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'OpenSans',
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.only(top: 14.0),
-            prefixIcon: Icon(
-              Icons.qr_code,
-              color: Colors.white,
-            ),
-            hintText: 'bike code',
-            hintStyle: kHintTextStyle,
-          ),
-        ),
-      ),
     ]);
   }
 }

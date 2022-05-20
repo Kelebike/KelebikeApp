@@ -85,10 +85,10 @@ class BikeService {
     return query.docs.first.id;
   }
 
-  Future<String?> findWithEmail(String code) async {
+  Future<String?> findWithEmail(String email) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
-        .where('owner', isEqualTo: code)
+        .where('owner', isEqualTo: email)
         .get();
     if (query.docs.isEmpty) return null;
     return query.docs.first.id;

@@ -54,7 +54,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
   User? _user = FirebaseAuth.instance.currentUser;
 
   MobileScannerController cameraController = MobileScannerController();
-
+  bool toggle = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,13 +64,24 @@ class _TakeBikePageState extends State<TakeBikePage> {
         elevation: 0,
         title: Text("Take a bike"),
         actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.keyboard)),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  toggle = !toggle;
+                });
+                cameraController.toggleTorch();
+              },
+              icon: toggle
+                  ? const Icon(Icons.flash_on)
+                  : const Icon(Icons.flash_off)),
           IconButton(
               onPressed: () {
                 cameraController.switchCamera();
               },
-              icon: const Icon(Icons.camera_rear_outlined))
+              icon: const Icon(Icons.camera_rear_outlined)),
         ],
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: Stack(
         children: [
@@ -97,13 +108,48 @@ class _TakeBikePageState extends State<TakeBikePage> {
                         ));
               } else {
                 _bikeService.takeBike(_barcode, _user!.email.toString());
-                Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Request successfull'),
+                          content: Text('Your request has been sent...'),
+                        ));
               }
             },
           ),
-          QRScannerOverlay(overlayColour: Colors.orange.withOpacity(1.0))
+          QRScannerOverlay(overlayColour: Colors.orange.withOpacity(0.7)),
         ],
       ),
     );
   }
 }
+
+
+
+/*Container(
+            //bike code container
+            alignment: Alignment.centerRight,
+            decoration: bikeCodeDecorationStyle,
+            height: 60.0,
+            width: 130.0,
+            child: TextField(
+              controller: _bikeCodeController,
+              keyboardType: TextInputType.phone,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'OpenSans',
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 14.0),
+                prefixIcon: Icon(
+                  Icons.qr_code,
+                  color: Colors.white,
+                ),
+                hintText: 'bike code',
+                hintStyle: kHintTextStyle,
+              ),
+            ),
+          ),
+
+          */

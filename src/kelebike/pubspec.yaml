@@ -45,6 +45,8 @@ dependencies:
   string_validator: ^0.3.0
   firebase_storage: ^10.2.12
   mobile_scanner: ^1.1.0
+  beauty_navigation: ^0.0.1
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:
