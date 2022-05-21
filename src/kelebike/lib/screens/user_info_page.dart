@@ -114,17 +114,23 @@ class _UserInfoPageState extends State<UserInfoPage> {
     var size = MediaQuery.of(context).size;
     var taken_counter = 0;
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    int flag = 0;
 
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
         stream: _bikeService.getBike(),
         builder: (context, snaphot) {
+          int flag = 0;
           return !snaphot.hasData
               ? CircularProgressIndicator()
               : Column(
                   children: [
                     _buildAvailable(),
+                    IconButton(
+                        onPressed: () {
+                          print("pressed");
+                        },
+                        icon: Icon(Icons.calendar_month),
+                        color: Colors.black),
                     Container(
                       height: size.height * 0.6122,
                       color: Colors.white.withOpacity(0),
