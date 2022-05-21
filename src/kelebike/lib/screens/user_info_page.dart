@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:flutter_countdown_timer/index.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kelebike/model/bike.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelebike/utilities/constants.dart';
+import 'package:kelebike/widgets/my_horizontal_list.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -33,22 +36,15 @@ class _UserInfoPageState extends State<UserInfoPage> {
           }
 
           if (snapshot.connectionState == ConnectionState.done) {}
-
-          return Container(
-            color: Color.fromARGB(255, 255, 255, 255).withOpacity(0),
-            height: size.height * 0.3,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 40.0,
-                vertical: 40,
-              ),
+          return Center(
+            child: Container(
+              color: Color.fromARGB(255, 255, 255, 255).withOpacity(0),
+              height: size.height * 0.3,
+              width: size.width * 0.3,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    width: double.infinity,
-                    height: 100,
                     decoration: kBoxDecorationStyle,
                     padding: const EdgeInsets.only(top: 16),
                     child: Column(
@@ -57,19 +53,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       children: <Widget>[
                         Align(
                             child: Icon(Icons.pedal_bike,
-                                color: Color.fromARGB(255, 0, 0, 0)
+                                color: Color.fromARGB(255, 255, 255, 255)
                                     .withOpacity(0.7))),
-                        Align(
-                          child: Text(
-                            'Bike Availability: ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
-                              color:
-                                  Color.fromARGB(255, 0, 0, 0).withOpacity(0.7),
-                            ),
-                          ),
-                        ),
+                        Align(),
                         Align(
                           child: FutureBuilder<int>(
                             future: _bikeService.findWithStatus("nontaken"),
@@ -92,20 +78,67 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  IconButton(
+                      onPressed: () {}, icon: Icon(Icons.access_alarm_outlined))
                 ],
               ),
             ),
           );
         });
+  }
+
+  Widget _test() {
+    User? _user = FirebaseAuth.instance.currentUser;
+    return Container(
+        child: StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('Bike').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot doc = snapshot.data!.docs[index];
+                if (_user!.email.toString() == doc['owner'] &&
+                    doc['status'] == 'taken') {
+                  return Container(
+                    margin: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text(
+                          doc['code'],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'OpenSans',
+                            color: Colors.orange.shade100,
+                          ),
+                        ),
+                        Text(doc['return']),
+                        Text(doc['issued']),
+                        CountdownTimer(
+                          endTime: DateTime.parse(doc['return'])
+                              .millisecondsSinceEpoch,
+                        ),
+                        _buildAvailable(),
+                        Container(
+                          width: double.infinity,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset('assets/logos/cool_bike.jpg',
+                                fit: BoxFit.fitHeight),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return SizedBox.shrink();
+              });
+        } else {
+          return Text("No data");
+        }
+      },
+    ));
   }
 
   @override
@@ -114,219 +147,169 @@ class _UserInfoPageState extends State<UserInfoPage> {
     var size = MediaQuery.of(context).size;
     var taken_counter = 0;
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+    double opacity = 1; // bu 0 olursa arkadaki gözükür.
     return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _bikeService.getBike(),
-        builder: (context, snaphot) {
-          int flag = 0;
-          return !snaphot.hasData
-              ? CircularProgressIndicator()
-              : Column(
-                  children: [
-                    _buildAvailable(),
-                    IconButton(
-                        onPressed: () {
-                          print("pressed");
-                        },
-                        icon: Icon(Icons.calendar_month),
-                        color: Colors.black),
-                    Container(
-                      height: size.height * 0.6122,
-                      color: Colors.white.withOpacity(0),
-                      child: ListView.builder(
-                          itemCount: snaphot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot mypost = snaphot.data!.docs[index];
-                            if ("${mypost['owner']}" ==
-                                    _user!.email.toString() &&
-                                "${mypost['status']}" == "taken") {
-                              flag++;
-                              return Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: InkWell(
-                                  child: Container(
-                                    height: size.height * .35,
-                                    decoration: kBoxDecorationStyle,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          CountdownTimer(
-                                            endTime: DateTime.parse(
-                                                    "${mypost['return']}")
-                                                .millisecondsSinceEpoch,
-                                          ),
-                                          Text(
-                                            "MyBike: ",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              fontFamily: 'OpenSans',
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          Text(""),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+        body: Column(
+      children: [
+        Stack(
+          children: [
+            MyHorizontalList(
+              startColor: Colors.orange.shade100,
+              endColor: Colors.red,
+              courseHeadline: 'Bike availability',
+              courseTitle: 'NUMBER OF \nAVAILABLE\nBIKE',
+              courseImage: 'assets/logos/available.png',
+              scale: 1.8,
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream: _bikeService.getBike(),
+              builder: (context, snaphot) {
+                int flag = 0;
+                return !snaphot.hasData
+                    ? CircularProgressIndicator()
+                    : Column(
+                        children: [
+                          //_buildAvailable(),
+                          //_test(),
+                          //IconButton( onPressed: () { print("pressed");},
+                          //icon: Icon(Icons.calendar_month),
+                          //color: Colors.black),
+                          Container(
+                            height: size.height * 0.6,
+                            color: Colors.white.withOpacity(opacity),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: ListView.builder(
+                                  itemCount: snaphot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot mypost =
+                                        snaphot.data!.docs[index];
+                                    if ("${mypost['owner']}" ==
+                                            _user!.email.toString() &&
+                                        "${mypost['status']}" == "taken") {
+                                      return SizedBox(
+                                        height: size.height * .55,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemCount: 1,
+                                          itemBuilder: (context, index) {
+                                            return Row(
                                               children: [
-                                                Text(
-                                                  "Code: ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
+                                                MyHorizontalList(
+                                                  startColor:
+                                                      Colors.orange.shade100,
+                                                  endColor: Colors.red,
+                                                  courseHeadline: 'My Bike',
+                                                  courseTitle: 'Bike code: \n' +
+                                                      '${mypost['code']}\n\n' +
+                                                      'Lock : \nTODO!!',
+                                                  courseImage:
+                                                      'assets/logos/bike_woman.png',
+                                                  scale: 1.4,
                                                 ),
-                                                Text(
-                                                  "${mypost['code']} ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
+                                                Stack(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  children: [
+                                                    MyHorizontalList(
+                                                      startColor: Colors
+                                                          .orange.shade100,
+                                                      endColor: Colors.red,
+                                                      courseHeadline:
+                                                          'Remaining Time',
+                                                      courseTitle: 'Issued: \n' +
+                                                          '${mypost['issued']}'
+                                                              .substring(
+                                                                  0, 11) +
+                                                          '\nReturn :\n' +
+                                                          '${mypost['return']}'
+                                                              .substring(0, 11),
+                                                      courseImage:
+                                                          'assets/logos/countdown.png',
+                                                      scale: 1.8,
+                                                    ),
+                                                    CountdownTimer(
+                                                      endTime: DateTime.parse(
+                                                              "${mypost['return']}")
+                                                          .millisecondsSinceEpoch,
+                                                      widgetBuilder: (_,
+                                                          CurrentRemainingTime?
+                                                              time) {
+                                                        if (time == null) {
+                                                          return const Text(
+                                                              ''); //time expired
+                                                        }
+                                                        return Text(
+                                                          '\n\n\n    ' +
+                                                              '${time.days}'
+                                                                  .padLeft(
+                                                                      2, '0') +
+                                                              ' : ' +
+                                                              '${time.hours}'
+                                                                  .padLeft(
+                                                                      2, '0') +
+                                                              ' : ' +
+                                                              '${time.min}'
+                                                                  .padLeft(
+                                                                      2, '0') +
+                                                              ' : ' +
+                                                              '${time.sec}'
+                                                                  .padLeft(
+                                                                      2, '0'),
+                                                          style: GoogleFonts
+                                                              .roboto(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                            fontSize: 25,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
                                                 ),
-                                              ]),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  " Brand: ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
+                                                MyHorizontalList(
+                                                  startColor:
+                                                      Colors.orange.shade100,
+                                                  endColor: Colors.red,
+                                                  courseHeadline:
+                                                      'Bike availability',
+                                                  courseTitle:
+                                                      'NUMBER OF \nAVAILABLE\nBIKE',
+                                                  courseImage:
+                                                      'assets/logos/available.png',
+                                                  scale: 1.8,
                                                 ),
-                                                Text(
-                                                  "${mypost['brand']}",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ]),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "   Serial Number: ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "${mypost['serialNumber']}",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ]),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "   Account: ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "${mypost['owner']}",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ]),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "   Issued Date: ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "${mypost['issued']}"
-                                                      .substring(0, 11),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ]),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Text(
-                                                  "   Expired Date: ",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "${mypost['return']}"
-                                                      .substring(0, 10),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    fontFamily: 'OpenSans',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ]),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            } else if (flag == 0) {
-                              flag++;
-                              return Image.asset('assets/logos/opps.png',
-                                  fit: BoxFit.fitHeight);
-                            } else
-                              return SizedBox.shrink();
-                          }),
-                    ),
-                  ],
-                );
-        },
-      ),
-    );
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    } else {
+                                      return const SizedBox.shrink();
+                                    }
+                                  }),
+                            ),
+                          ),
+                        ],
+                      );
+              },
+            ),
+          ],
+        ),
+
+        //Image.asset('assets/logos/cool_bike.jpg', fit: BoxFit.fitHeight),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5.0),
+          child: Image.asset(
+            'assets/logos/cool_bike.jpg',
+            height: size.height * .3,
+            width: size.width,
+          ),
+        )
+      ],
+    ));
   }
 }

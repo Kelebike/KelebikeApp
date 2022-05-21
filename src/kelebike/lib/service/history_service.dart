@@ -13,8 +13,19 @@ class HistoryService {
   Future<DocumentReference<Map<String, dynamic>>> addHistory(
       String docId) async {
     BikeService _bikeService = BikeService();
-
+    String? id = await _bikeService.findWithBikeCode(docId);
     bool flag = true;
+    var refBike = _firestore
+        .collection("Bike")
+        .doc(id)
+        .update({
+          'return': DateTime.now().toString(),
+        })
+        .then((_) => print('Updated'))
+        .catchError((error) {
+          flag = false;
+        });
+
     var ref = _firestore.collection("History");
     var bike = await _firestore.collection("Bike").doc(docId);
     var _info = await getBikeWithCode(docId);

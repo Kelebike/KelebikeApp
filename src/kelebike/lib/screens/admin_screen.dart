@@ -43,7 +43,7 @@ class _AdminScreenState extends State<AdminScreen> {
       body: screens[index],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-            indicatorColor: Colors.white.withOpacity(0.8),
+            indicatorColor: Colors.orange.shade100,
             labelTextStyle: MaterialStateProperty.all(
               TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             )),
