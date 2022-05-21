@@ -1,9 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:kelebike/service/auth.dart';
-import 'package:kelebike/utilities/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kelebike/service/history_service.dart';
 
 class HistoryScreen extends StatefulWidget {
   @override
@@ -11,47 +8,127 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  HistoryService _historyService = HistoryService();
+  Color isTaken(String taken) {
+    if (taken == "taken") {
+      return Colors.red;
+    } else if (taken == "waiting") {
+      return Colors.yellow;
+    } else if (taken == "nontaken") {
+      return Colors.green;
+    } else {
+      return Colors.yellow;
+    }
+  }
+
+  List parse(String bike) {
+    String s = bike;
+    var parts = s.split(',');
+    return parts;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Color(0xFF6CA8F1),
-        elevation: 0,
-        title: Text("History"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                  child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50, left: 20),
-                    child: Text(
-                      "burada bisiklet kiralama",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 39, 37, 37)),
+    var size = MediaQuery.of(context).size;
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: _historyService.getHistory(),
+      builder: (context, snaphot) {
+        return !snaphot.hasData
+            ? CircularProgressIndicator()
+            : ListView.builder(
+                itemCount: snaphot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot mypost = snaphot.data!.docs[index];
+                  String _bike = "${mypost['bike']}";
+                  var infoBike = parse(_bike);
+                  print(infoBike[1]);
+                  Future<void> _showChoiseDialog(BuildContext context) {
+                    return showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                              title: Text(
+                                "Silmek istediğinize emin misiniz?",
+                                textAlign: TextAlign.center,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0))),
+                              content: Container(
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "Evet",
+                                          style: TextStyle(
+                                              color: Color(0xFF6CA8F1),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "Vazgeç",
+                                          style: TextStyle(
+                                              color: Color(0xFF6CA8F1),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  )));
+                        });
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        _showChoiseDialog(context);
+                      },
+                      child: Container(
+                        height: size.height * .2,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border:
+                                Border.all(color: Color(0xFF6CA8F1), width: 2),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Bike: "),
+                              Text(infoBike[0]),
+                              Text(infoBike[1]),
+                              Text(infoBike[2]),
+                              Text(infoBike[3]),
+                              Text(infoBike[4]),
+                              Text(infoBike[5]),
+                              Text(infoBike[6]),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 90, left: 20),
-                    child: Text(
-                      "geçmişi bulunur!",
-                      style: TextStyle(
-                          fontSize: 30, color: Color.fromARGB(255, 22, 14, 14)),
-                    ),
-                  )
-                ],
-              )),
-            ],
-          ),
-        ),
-      ),
+                  );
+                });
+      },
     );
   }
 }

@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AuthService _authService = AuthService();
   bool _rememberMe = false;
   int index = 2;
+  int data = 0;
 
   final screens = [
     HistoryScreen(), //Mail page vs.
@@ -48,8 +49,18 @@ class _HomeScreenState extends State<HomeScreen> {
             labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
             animationDuration: Duration(milliseconds: 500),
             selectedIndex: index,
-            onDestinationSelected: (int index) =>
-                setState(() => this.index = index),
+            onDestinationSelected: (int index) => setState(() {
+              this.index = index;
+              print(data);
+              if (data == 1 && index == 3) {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Error'),
+                          content: Text('You already have a request.'),
+                        ));
+              }
+            }),
             destinations: const [
               NavigationDestination(
                   icon: Icon(Icons.history_outlined),

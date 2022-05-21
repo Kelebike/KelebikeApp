@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
+import 'package:kelebike/service/history_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 
 class Return extends StatefulWidget {
@@ -48,6 +49,7 @@ Widget _buildBikeCode() {
 
 class _ReturnState extends State<Return> {
   BikeService _bikeService = BikeService();
+  HistoryService _historyService = HistoryService();
   User? _user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -83,19 +85,36 @@ class _ReturnState extends State<Return> {
                     textStyle:
                         MaterialStateProperty.all(TextStyle(fontSize: 15))),
                 onPressed: () async {
-                  bool a =
-                      await _bikeService.returnBike(_bikeCodeController.text);
-
+                  await _historyService
+                      .getBikeWithCode(_bikeCodeController.text);
+                  String? docID = await _bikeService
+                      .findWithBikeCode(_bikeCodeController.text);
                   if (await _bikeService
-                          .findWithBikeCode(_bikeCodeController.text) ==
-                      null) {
+                          .findWithMail(_user!.email.toString()) !=
+                      1) {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              title: Text('Error'),
+                              content: Text('There is no bike here.'),
+                            ));
+                  } else if (docID == null) {
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
                               content: Text('Bike not found!'),
                             ));
-                  } else {}
+                  } else {
+                    await _historyService.addHistory(_bikeCodeController.text);
+                    await _bikeService.returnBike(_bikeCodeController.text);
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              title: Text('Succesfull'),
+                              content: Text('Bike returned successfully!'),
+                            ));
+                  }
                 },
                 child: Text("Take back the bike"),
               )

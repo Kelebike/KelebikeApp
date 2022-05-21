@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/screens/qr_overlay.dart';
 import 'package:kelebike/screens/qr_scanner_controller.dart';
+import 'package:kelebike/screens/user_info_page.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
@@ -91,8 +93,16 @@ class _TakeBikePageState extends State<TakeBikePage> {
             onDetect: (barcode, args) async {
               String? _barcode = barcode.rawValue;
               debugPrint('Barcode Found!' + barcode.rawValue!);
-
-              if (await _bikeService.findWithBikeCode(_barcode!) == null) {
+              if (await _bikeService.findWithMail(_user!.email.toString()) ==
+                  1) {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Error'),
+                          content: Text('You already have a request.'),
+                        ));
+              } else if (await _bikeService.findWithBikeCode(_barcode!) ==
+                  null) {
                 showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
@@ -117,7 +127,8 @@ class _TakeBikePageState extends State<TakeBikePage> {
               }
             },
           ),
-          QRScannerOverlay(overlayColour: Colors.orange.withOpacity(0.7)),
+          QRScannerOverlay(
+              overlayColour: Colors.orange.shade200.withOpacity(0.9)),
         ],
       ),
     );

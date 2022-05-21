@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kelebike/model/bike.dart';
 import 'package:kelebike/service/bike_service.dart';
@@ -139,7 +140,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: InkWell(
                                   child: Container(
-                                    height: size.height * .3,
+                                    height: size.height * .35,
                                     decoration: kBoxDecorationStyle,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -147,6 +148,11 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
+                                          CountdownTimer(
+                                            endTime: DateTime.parse(
+                                                    "${mypost['return']}")
+                                                .millisecondsSinceEpoch,
+                                          ),
                                           Text(
                                             "MyBike: ",
                                             style: TextStyle(
@@ -277,7 +283,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Text(
+                                                const Text(
                                                   "   Expired Date: ",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
@@ -289,7 +295,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                 Text(
                                                   "${mypost['return']}"
                                                       .substring(0, 10),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
                                                     fontFamily: 'OpenSans',
