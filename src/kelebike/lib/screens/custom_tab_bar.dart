@@ -9,7 +9,7 @@ class CustomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      decoration: BoxDecoration(color: Color.fromARGB(255, 122, 53, 53)),
+      decoration: BoxDecoration(color: Color(0xFF6CA8F1).withOpacity(0.7)),
       child: Row(
         children: <Widget>[
           Container(
@@ -18,7 +18,7 @@ class CustomTabBar extends StatelessWidget {
           Expanded(
             child: CustomTabBarButton(
               text: "Take Request",
-              textColor: index == 0 ? Colors.green : Colors.orange,
+              textColor: index == 0 ? Colors.white : Colors.grey,
               borderColor: index == 0 ? Colors.transparent : Colors.transparent,
               borderWidth: index == 0 ? 3 : 0,
             ),
@@ -26,7 +26,7 @@ class CustomTabBar extends StatelessWidget {
           Expanded(
             child: CustomTabBarButton(
               text: "Return Request",
-              textColor: index == 1 ? Colors.green : Colors.orange,
+              textColor: index == 1 ? Colors.white : Colors.grey,
               borderColor: index == 1 ? Colors.transparent : Colors.transparent,
               borderWidth: index == 1 ? 3 : 0,
             ),

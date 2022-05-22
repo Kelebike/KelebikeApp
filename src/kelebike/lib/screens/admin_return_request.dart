@@ -12,12 +12,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        Text(
-          "ağağğağağağağğ",
-          style: kLabelStyle,
-        ),
-      ],
+      children: <Widget>[],
     );
   }
 }
