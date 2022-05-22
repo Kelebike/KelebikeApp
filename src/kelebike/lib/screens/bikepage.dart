@@ -17,6 +17,8 @@ class _BikePageState extends State<BikePage> {
       return Colors.yellow;
     } else if (taken == "nontaken") {
       return Colors.green;
+    } else if (taken == "repair") {
+      return Color.fromARGB(255, 28, 7, 224);
     } else {
       return Colors.yellow;
     }
@@ -92,12 +94,38 @@ class _BikePageState extends State<BikePage> {
                                           ),
                                           GestureDetector(
                                             onTap: () async {
-                                              await _bikeService
-                                                  .removeBike(mypost.id);
+                                              await _bikeService.repairBike(
+                                                  '${mypost['code']}',
+                                                  mypost.id);
                                               Navigator.pop(context);
                                             },
                                             child: Text(
                                               "Bisikleti Bakıma Al",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      new Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.pedal_bike,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _bikeService.unrepairBike(
+                                                  '${mypost['code']}',
+                                                  mypost.id);
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              "Bisikleti Kullanıma Al",
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight:

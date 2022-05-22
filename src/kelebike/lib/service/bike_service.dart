@@ -85,6 +85,17 @@ class BikeService {
     return query.docs.first.id;
   }
 
+  Future<String?> isThisBikeRepair(String code) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('code', isEqualTo: code)
+        .where('status', isEqualTo: "repair")
+        .get();
+
+    if (query.docs.isEmpty) return null;
+    return query.docs.first.id;
+  }
+
   Future<String?> findWithEmail(String email) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
@@ -116,7 +127,7 @@ class BikeService {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
         .where('owner', isEqualTo: owner)
-        .where('status', isEqualTo: "waiting_r")
+        .where('status', isEqualTo: "returned")
         .get();
     return query.docs.length;
   }
@@ -167,19 +178,43 @@ class BikeService {
     return flag;
   }
 
-  Future<bool> repairBike(String bikeCode) async {
-    String? docId = await findWithBikeCode(bikeCode);
+  Future<bool> repairBike(String bikeCode, String docId) async {
+    String? rep = await this.isThisBikeTaken(bikeCode);
     bool flag = true;
-    var ref = _firestore
-        .collection("Bike")
-        .doc(docId)
-        .update({
-          'status': "repair",
-        })
-        .then((_) => print('Updated'))
-        .catchError((error) {
-          flag = false;
-        });
+    if (rep != null) {
+      var ref = _firestore
+          .collection("Bike")
+          .doc(docId)
+          .update({
+            'status': "repair",
+          })
+          .then((_) => print('Updated'))
+          .catchError((error) {
+            flag = false;
+          });
+    }
+    print(rep);
+
+    return flag;
+  }
+
+  Future<bool> unrepairBike(String bikeCode, String docId) async {
+    String? rep = await this.isThisBikeRepair(bikeCode);
+    bool flag = true;
+    if (rep != null) {
+      var ref = _firestore
+          .collection("Bike")
+          .doc(docId)
+          .update({
+            'status': "nontaken",
+          })
+          .then((_) => print('Updated'))
+          .catchError((error) {
+            flag = false;
+          });
+    }
+    print(rep);
+
     return flag;
   }
 
