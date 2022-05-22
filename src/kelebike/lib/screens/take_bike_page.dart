@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/screens/qr_overlay.dart';
 import 'package:kelebike/screens/qr_scanner_controller.dart';
+import 'package:kelebike/screens/take_bike_with_keyboard.dart';
 import 'package:kelebike/screens/user_info_page.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
@@ -66,7 +67,14 @@ class _TakeBikePageState extends State<TakeBikePage> {
         elevation: 0,
         title: Text("Take a bike"),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.keyboard)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TakeBikeKeyboardPage()));
+              },
+              icon: const Icon(Icons.keyboard)),
           IconButton(
               onPressed: () {
                 setState(() {
