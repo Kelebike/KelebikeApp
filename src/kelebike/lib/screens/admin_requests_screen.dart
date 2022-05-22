@@ -27,7 +27,7 @@ class _RequestScreenState extends State<RequestScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFF6CA8F1).withOpacity(0.7),
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Requests"),
         centerTitle: true,
