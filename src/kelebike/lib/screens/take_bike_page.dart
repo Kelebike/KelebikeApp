@@ -19,38 +19,6 @@ class TakeBikePage extends StatefulWidget {
 }
 
 TextEditingController _bikeCodeController = TextEditingController();
-Widget _buildBikeCode() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      SizedBox(height: 10.0),
-      Container(
-        alignment: Alignment.centerLeft,
-        decoration: bikeCodeDecorationStyle,
-        height: 60.0,
-        width: double.infinity,
-        child: TextField(
-          controller: _bikeCodeController,
-          keyboardType: TextInputType.phone,
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'OpenSans',
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.only(top: 14.0),
-            prefixIcon: Icon(
-              Icons.qr_code,
-              color: Colors.white,
-            ),
-            hintText: 'bike code',
-            hintStyle: kHintTextStyle,
-          ),
-        ),
-      ),
-    ],
-  );
-}
 
 class _TakeBikePageState extends State<TakeBikePage> {
   BikeService _bikeService = BikeService();
@@ -141,33 +109,3 @@ class _TakeBikePageState extends State<TakeBikePage> {
     );
   }
 }
-
-
-
-/*Container(
-            //bike code container
-            alignment: Alignment.centerRight,
-            decoration: bikeCodeDecorationStyle,
-            height: 60.0,
-            width: 130.0,
-            child: TextField(
-              controller: _bikeCodeController,
-              keyboardType: TextInputType.phone,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'OpenSans',
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
-                prefixIcon: Icon(
-                  Icons.qr_code,
-                  color: Colors.white,
-                ),
-                hintText: 'bike code',
-                hintStyle: kHintTextStyle,
-              ),
-            ),
-          ),
-
-          */
