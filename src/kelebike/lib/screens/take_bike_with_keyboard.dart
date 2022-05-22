@@ -93,7 +93,7 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
                               content: Text('You already have a request.'),
                             ));
                   } else if (await _bikeService
-                          .findWithBikeCode(_bikeCodeController.text!) ==
+                          .findWithBikeCode(_bikeCodeController.text) ==
                       null) {
                     showDialog(
                         context: context,
@@ -122,75 +122,6 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
                   }
                 },
                 child: Text("Take a bike"),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
-        elevation: 0,
-        title: Text("Take a bike"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                  child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50, left: 20),
-                    child: _buildBikeCode(),
-                  ),
-                ],
-              )),
-              ElevatedButton(
-                onPressed: () async {
-                  if (await _bikeService
-                          .findWithMail(_user!.email.toString()) ==
-                      1) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: Text('Error'),
-                              content: Text('You already have a request.'),
-                            ));
-                  } else if (await _bikeService
-                          .findWithBikeCode(_bikeCodeController.text!) ==
-                      null) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: Text('Error'),
-                              content: Text('Bike not found!'),
-                            ));
-                  } else if (await _bikeService
-                          .isThisBikeTaken(_bikeCodeController.text) ==
-                      null) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: Text('Error'),
-                              content: Text('This bike is already taken!'),
-                            ));
-                  } else {
-                    _bikeService.takeBike(
-                        _bikeCodeController.text, _user!.email.toString());
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: Text('Request successfull'),
-                              content: Text('Your request has been sent...'),
-                            ));
-                  }
-                },
-                child: Text("Send request"),
               )
             ],
           ),
