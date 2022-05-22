@@ -90,7 +90,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
                         });
                   }
 
-                  if ("${mypost['status']}" == "waiting_r") {
+                  if ("${mypost['status']}" == "returned") {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(

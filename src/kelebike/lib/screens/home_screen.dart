@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/screens/take_bike_page.dart';
 import 'package:kelebike/screens/user_info_page.dart';
+import 'package:kelebike/screens/user_returns.dart';
 import 'package:kelebike/screens/user_settings.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final screens = [
     HistoryScreen(), //Mail page vs.
-    ReturnPage(),
+    ReturnQRPage(),
     UserInfoPage(),
     TakeBikePage(),
     SettingsScreen(),
