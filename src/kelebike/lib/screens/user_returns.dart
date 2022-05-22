@@ -59,7 +59,7 @@ class _ReturnState extends State<Return> {
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
-        title: Text("Take back bike"),
+        title: Text("Give back bike"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -126,7 +126,7 @@ class _ReturnState extends State<Return> {
                             ));
                   }
                 },
-                child: Text("Take back the bike"),
+                child: Text("Give back the bike"),
               )
             ],
           ),

@@ -57,7 +57,7 @@ class HistoryService {
   Stream<QuerySnapshot> getHistory() {
     var ref = _firestore
         .collection("History")
-        .orderBy('createdAt', descending: true) //TRY IT!!!! BERKAY
+        .orderBy('createdAt', descending: true)
         .snapshots();
 
     return ref;
