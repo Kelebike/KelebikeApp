@@ -15,6 +15,8 @@ import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 
+import 'admin_history_screen.dart';
+
 class AdminScreen extends StatefulWidget {
   @override
   _AdminScreenState createState() => _AdminScreenState();
@@ -27,7 +29,7 @@ class _AdminScreenState extends State<AdminScreen> {
   int index = 2;
 
   final screens = [
-    HistoryScreen(),
+    AdminHistoryScreen(),
     AdminBikesScreen(),
     AdminInfoPage(),
     RequestScreen(),
