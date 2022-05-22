@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,43 +42,69 @@ class _BikePageState extends State<BikePage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                               title: Text(
-                                "Silmek istediğinize emin misiniz?",
+                                "Lütfen Bir İşlem Seçiniz",
                                 textAlign: TextAlign.center,
                               ),
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(8.0))),
                               content: Container(
-                                  height: 30,
+                                  height: 150,
+                                  width: 150,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                   ),
-                                  child: Row(
+                                  child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          _bikeService.removeBike(mypost.id);
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          "Evet",
-                                          style: TextStyle(
-                                              color: Color(0xFF6CA8F1),
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                      new Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.delete,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _bikeService
+                                                  .removeBike(mypost.id);
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              "Bisikleti Sil",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          "Vazgeç",
-                                          style: TextStyle(
-                                              color: Color(0xFF6CA8F1),
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                      new Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.replay_circle_filled,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _bikeService
+                                                  .removeBike(mypost.id);
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              "Bisikleti Bakıma Al",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ],
                                   )));

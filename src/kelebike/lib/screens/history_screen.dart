@@ -46,53 +46,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   String _bike = "${mypost['bike']}";
                   var infoBike = parse(_bike);
                   print(infoBike[1]);
-                  Future<void> _showChoiseDialog(BuildContext context) {
-                    return showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text(
-                                "Silmek istediğinize emin misiniz?",
-                                textAlign: TextAlign.center,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0))),
-                              content: Container(
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          "Evet",
-                                          style: TextStyle(
-                                              color: Color(0xFF6CA8F1),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          "Vazgeç",
-                                          style: TextStyle(
-                                              color: Color(0xFF6CA8F1),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  )));
-                        });
-                  }
 
                   if (_user!.email.toString() ==
                       infoBike[0]
@@ -104,9 +57,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
-                        onTap: () {
-                          _showChoiseDialog(context);
-                        },
+                        onTap: () {},
                         child: Container(
                           height: size.height * .2,
                           decoration: BoxDecoration(
