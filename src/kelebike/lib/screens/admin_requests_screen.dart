@@ -25,9 +25,9 @@ class _RequestScreenState extends State<RequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 68, 10, 10),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFF6CA8F1).withOpacity(0.7),
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Requests"),
         centerTitle: true,
