@@ -55,7 +55,10 @@ class HistoryService {
 
   //History göstermek için
   Stream<QuerySnapshot> getHistory() {
-    var ref = _firestore.collection("History").orderBy('createdAt').snapshots();
+    var ref = _firestore
+        .collection("History")
+        .orderBy('createdAt', descending: true) //TRY IT!!!! BERKAY
+        .snapshots();
 
     return ref;
   }
