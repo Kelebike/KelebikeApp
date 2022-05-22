@@ -127,8 +127,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
               }
             },
           ),
-          QRScannerOverlay(
-              overlayColour: Colors.orange.shade200.withOpacity(0.9)),
+          QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.7)),
         ],
       ),
     );

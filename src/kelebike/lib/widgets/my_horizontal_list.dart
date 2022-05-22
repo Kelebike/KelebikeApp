@@ -9,18 +9,19 @@ class MyHorizontalList extends StatelessWidget {
       required this.courseHeadline,
       required this.courseTitle,
       required this.courseImage,
+      required this.width,
       required this.scale})
       : super(key: key);
   final Color startColor, endColor;
   final String courseHeadline, courseTitle, courseImage;
-  final double scale;
+  final double scale, width;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 10, left: 10),
       child: Container(
-        width: 246,
+        width: width,
         height: 349,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),

@@ -111,6 +111,15 @@ class BikeService {
     return query.docs.length;
   }
 
+  Future<int> findWithUserInfo(String owner) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('owner', isEqualTo: owner)
+        .where('status', isEqualTo: "taken")
+        .get();
+    return query.docs.length;
+  }
+
   Future<int>? totalBike() async {
     QuerySnapshot query =
         await FirebaseFirestore.instance.collection("Bike").get();

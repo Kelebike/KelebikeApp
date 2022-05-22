@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/utilities/constants.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   User? _user = FirebaseAuth.instance.currentUser;
   AuthService _authService = AuthService();
-
+  bool _toggle = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,42 +25,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text("Settings"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                  child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 90, left: 20),
-                    child: Text(
-                      "Welcome!",
-                      style: TextStyle(
-                          fontSize: 30, color: Color.fromARGB(255, 22, 14, 14)),
-                    ),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        _authService.signOut();
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
-                        _user = null;
-                      },
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text("Sign out",
-                            style: TextStyle(fontSize: 20.0),
-                            textAlign: TextAlign.center),
-                      )),
-                ],
-              )),
+      body: SettingsList(
+        sections: [
+          SettingsSection(
+            title: Text('Common'),
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                leading: Icon(Icons.language),
+                title: Text('Language'),
+                value: Text('English'),
+              ),
+              SettingsTile.switchTile(
+                initialValue: _toggle,
+                onToggle: (bool value) {
+                  setState(() {
+                    _toggle = value;
+                  });
+                },
+                leading: Icon(Icons.notifications),
+                title: Text('Enable notifications'),
+              ),
+              SettingsTile.navigation(
+                leading: Icon(Icons.exit_to_app),
+                title: Text('Sign out'),
+                onPressed: (context) {
+                  _authService.signOut();
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                  _user = null;
+                },
+              ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
