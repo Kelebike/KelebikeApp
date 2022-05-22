@@ -111,6 +111,15 @@ class BikeService {
     return query.docs.length;
   }
 
+  Future<int> findWithReturn(String owner) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('owner', isEqualTo: owner)
+        .where('status', isEqualTo: "waiting_r")
+        .get();
+    return query.docs.length;
+  }
+
   Future<int> findWithUserInfo(String owner) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
@@ -176,6 +185,21 @@ class BikeService {
   }
 
   Future<bool> returnBike(String bikeCode) async {
+    bool flag = true;
+    var ref = _firestore
+        .collection("Bike")
+        .doc(await findWithBikeCode(bikeCode))
+        .update({
+          'status': "waiting_r",
+        })
+        .then((_) => print('return request from user!'))
+        .catchError((error) {
+          flag = false;
+        });
+    return flag;
+  }
+
+  Future<bool> confirmReturnBike(String bikeCode) async {
     bool flag = true;
     var ref = _firestore
         .collection("Bike")

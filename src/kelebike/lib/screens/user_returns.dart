@@ -89,14 +89,24 @@ class _ReturnState extends State<Return> {
                       .getBikeWithCode(_bikeCodeController.text);
                   String? docID = await _bikeService
                       .findWithBikeCode(_bikeCodeController.text);
+
                   if (await _bikeService
+                          .findWithReturn(_user!.email.toString()) ==
+                      1) {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              title: Text('Error'),
+                              content: Text('You already have a request.'),
+                            ));
+                  } else if (await _bikeService
                           .findWithMail(_user!.email.toString()) !=
                       1) {
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
-                              content: Text('There is no bike here.'),
+                              content: Text('You have no bike.'),
                             ));
                   } else if (docID == null) {
                     showDialog(
@@ -106,13 +116,13 @@ class _ReturnState extends State<Return> {
                               content: Text('Bike not found!'),
                             ));
                   } else {
-                    await _historyService.addHistory(_bikeCodeController.text);
                     await _bikeService.returnBike(_bikeCodeController.text);
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
-                              title: Text('Succesfull'),
-                              content: Text('Bike returned successfully!'),
+                              title: Text('Request Succesfull'),
+                              content:
+                                  Text('Your return request has been sent...'),
                             ));
                   }
                 },

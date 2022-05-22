@@ -130,7 +130,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
                     context: context,
                     builder: (_) => AlertDialog(
                           title: Text('Request successfull'),
-                          content: Text('Your request has been sent...'),
+                          content: Text('Your take request has been sent...'),
                         ));
               }
             },

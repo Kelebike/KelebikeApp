@@ -44,7 +44,6 @@ class _AdminHistoryScreen extends State<AdminHistoryScreen> {
                   DocumentSnapshot mypost = snaphot.data!.docs[index];
                   String _bike = "${mypost['bike']}";
                   var infoBike = parse(_bike);
-                  print(infoBike[1]);
                   Future<void> _showChoiseDialog(BuildContext context) {
                     return showDialog(
                         context: context,
