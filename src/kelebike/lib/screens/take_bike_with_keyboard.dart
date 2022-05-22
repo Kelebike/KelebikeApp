@@ -58,7 +58,7 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Take a bike"),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: SingleChildScrollView(
         child: Container(

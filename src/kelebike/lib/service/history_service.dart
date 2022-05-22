@@ -30,7 +30,11 @@ class HistoryService {
     var bike = await _firestore.collection("Bike").doc(docId);
     var _info = await getBikeWithCode(docId);
     print(_info);
-    Map<String, dynamic> _bike = {'id': bike.toString(), 'bike': _info};
+    Map<String, dynamic> _bike = {
+      'id': bike.toString(),
+      'bike': _info,
+      'createdAt': FieldValue.serverTimestamp()
+    };
 
     var documentRef = await ref.add(_bike);
     return bike;
@@ -51,7 +55,8 @@ class HistoryService {
 
   //History göstermek için
   Stream<QuerySnapshot> getHistory() {
-    var ref = _firestore.collection("History").snapshots();
+    var ref = _firestore.collection("History").orderBy('createdAt').snapshots();
+
     return ref;
   }
 }
