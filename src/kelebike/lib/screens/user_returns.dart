@@ -72,7 +72,7 @@ class _ReturnQRPageState extends State<ReturnQRPage> {
               debugPrint('Barcode Found!' + barcode.rawValue!);
               await _historyService.getBikeWithCode(_returnBarcode!);
               String? docID =
-                  await _bikeService.findWithBikeCode(_returnBarcode!);
+                  await _bikeService.findWithBikeCode(_returnBarcode);
 
               if (await _bikeService.findWithReturn(_user!.email.toString()) ==
                   1) {
@@ -100,7 +100,7 @@ class _ReturnQRPageState extends State<ReturnQRPage> {
                           content: Text('Bike not found!'),
                         ));
               } else {
-                await _bikeService.returnBike(_returnBarcode!);
+                await _bikeService.returnBike(_returnBarcode);
                 showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
