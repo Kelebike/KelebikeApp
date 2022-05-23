@@ -2,6 +2,9 @@ import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelebike/utilities/constants.dart';
+import 'package:kelebike/widgets/my_horizontal_list.dart';
+import 'package:string_validator/string_validator.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AdminInfoPage extends StatefulWidget {
   @override
@@ -26,224 +29,235 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     String bike_counter;
-    var waiting_counter = 0;
+    var waiting_counter = 2.0;
     var taken_counter = 0;
     var repair_counter = 0;
+
     return StreamBuilder(
         stream: _bikeService.getBike(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          final List<ChartData> chartData = [
+            ChartData('Available', 10, Colors.white),
+            ChartData('Circulation', 0, Colors.white),
+            ChartData('Repair', 0, Colors.white)
+          ];
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
 
           if (snapshot.connectionState == ConnectionState.done) {}
+          return Column(
+            children: [
+              //_buildAvailable(),
+              //_test(),
+              //IconButton( onPressed: () { print("pressed");},
+              //icon: Icon(Icons.calendar_month),
+              //color: Colors.black),
+              Expanded(
+                child: Container(
+                  height: size.height * 0.55,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot mypost = snapshot.data!.docs[index];
 
-          return Container(
-            height: double.infinity,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 40.0,
-                vertical: 40,
+                          return SizedBox(
+                            height: size.height * .55,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 1,
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  children: [
+                                    FutureBuilder<int>(
+                                      future: _bikeService.totalBike(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            width: 246,
+                                            startColor: Colors.orange.shade100,
+                                            endColor: Color.fromARGB(
+                                                255, 241, 199, 33),
+                                            courseHeadline: 'Total',
+                                            courseTitle:
+                                                'NUMBER OF \nTOTAL\nBIKES : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/total.png',
+                                            scale: 14,
+                                          );
+                                        } else {
+                                          return Text('Calculating answer...');
+                                        }
+                                      },
+                                    ),
+                                    FutureBuilder<int>(
+                                      future: _bikeService
+                                          .findWithStatus("nontaken"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        chartData[0] = (ChartData(
+                                            'Available',
+                                            toDouble('${snapshot.data}'),
+                                            Colors.white));
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            width: 246,
+                                            startColor: Colors.orange.shade100,
+                                            endColor: Color.fromARGB(
+                                                255, 54, 235, 244),
+                                            courseHeadline: 'Bike availability',
+                                            courseTitle:
+                                                'NUMBER OF \nAVAILABLE\nBIKES : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/available.png',
+                                            scale: 1.8,
+                                          );
+                                        } else {
+                                          return Text('Calculating answer...');
+                                        }
+                                      },
+                                    ),
+                                    FutureBuilder<int>(
+                                      future:
+                                          _bikeService.findWithStatus("repair"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        chartData[1] = (ChartData(
+                                            'Repair',
+                                            toDouble('${snapshot.data}'),
+                                            Colors.white));
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            width: 246,
+                                            startColor: Color.fromARGB(
+                                                255, 215, 212, 207),
+                                            endColor:
+                                                Color.fromARGB(255, 70, 81, 87),
+                                            courseHeadline: 'Repair',
+                                            courseTitle:
+                                                'NUMBER \nOF BIKES \nIN REPAIR : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/repair.png',
+                                            scale: 8,
+                                          );
+                                        } else {
+                                          return Text('Calculating answer...');
+                                        }
+                                      },
+                                    ),
+                                    FutureBuilder<int>(
+                                      future:
+                                          _bikeService.findWithStatus("taken"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        chartData[2] = (ChartData(
+                                            'Circulation',
+                                            toDouble('${snapshot.data}'),
+                                            Colors.white));
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            width: 246,
+                                            startColor: Color.fromARGB(
+                                                255, 225, 246, 133),
+                                            endColor: Color.fromARGB(
+                                                255, 0, 183, 110),
+                                            courseHeadline: 'Circulation',
+                                            courseTitle:
+                                                'NUMBER \nOF BIKES IN\nCIRCULATION : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/circulation.png',
+                                            scale: 16,
+                                          );
+                                        } else {
+                                          return Text('Calculating answer...');
+                                        }
+                                      },
+                                    ),
+                                    FutureBuilder<int>(
+                                      future: _bikeService
+                                          .findWithStatus("waiting"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            width: 246,
+                                            startColor: Color.fromARGB(
+                                                255, 191, 208, 172),
+                                            endColor: Color.fromARGB(
+                                                255, 125, 158, 214),
+                                            courseHeadline: 'Take request',
+                                            courseTitle:
+                                                'NUMBER \nOF TAKE\nREQUESTS : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/take.png',
+                                            scale: 9,
+                                          );
+                                        } else {
+                                          return Text('Calculating answer...');
+                                        }
+                                      },
+                                    ),
+                                    FutureBuilder<int>(
+                                      future: _bikeService
+                                          .findWithStatus("returned"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            width: 246,
+                                            startColor: Color.fromARGB(
+                                                255, 240, 216, 232),
+                                            endColor: Color.fromARGB(
+                                                255, 196, 12, 147),
+                                            courseHeadline: 'Return request',
+                                            courseTitle:
+                                                'NUMBER \nOF RETURN\nREQUESTS : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/return.png',
+                                            scale: 8,
+                                          );
+                                        } else {
+                                          return Text('Calculating answer...');
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          );
+                        }),
+                  ),
+                ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: kBoxDecorationStyle,
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Align(
-                            child: Icon(Icons.pedal_bike, color: Colors.white)),
-                        Align(
-                          child: Text(
-                            'Total Bicycle: ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontFamily: 'OpenSans',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          child: FutureBuilder<int>(
-                            future: _bikeService.totalBike(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  '${snapshot.data}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.white,
-                                  ),
-                                );
-                              } else {
-                                return Text('Calculating answer...');
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: kBoxDecorationStyle,
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Align(child: Icon(Icons.info, color: Colors.white)),
-                        Align(
-                          child: Text(
-                            'Number Of Request:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontFamily: 'OpenSans',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          child: FutureBuilder<int>(
-                            future: _bikeService.findWithStatus("waiting"),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  '${snapshot.data}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.white,
-                                  ),
-                                );
-                              } else {
-                                return Text('Calculating answer...');
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: kBoxDecorationStyle,
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Align(
-                            child: Icon(Icons.autorenew, color: Colors.white)),
-                        Align(
-                          child: Text(
-                            'Bicycles In Circulation:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontFamily: 'OpenSans',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          child: FutureBuilder<int>(
-                            future: _bikeService.findWithStatus("taken"),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  '${snapshot.data}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.white,
-                                  ),
-                                );
-                              } else {
-                                return Text('Calculating answer...');
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: kBoxDecorationStyle,
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Align(child: Icon(Icons.build, color: Colors.white)),
-                        Align(
-                          child: Text(
-                            'Bicycles In Renovation:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontFamily: 'OpenSans',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          child: FutureBuilder<int>(
-                            future: _bikeService.findWithStatus("repair"),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  '${snapshot.data}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans',
-                                    color: Colors.white,
-                                  ),
-                                );
-                              } else {
-                                return Text('Calculating answer...');
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: Image.asset(
+                  'assets/logos/admin.png',
+                  height: size.height * .3,
+                  width: size.width,
+                ),
+              )
+            ],
           );
         });
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.y, this.color);
+  final String x;
+  final double y;
+  final Color color;
 }
