@@ -219,8 +219,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                 startColor: Colors
                                                                     .orange
                                                                     .shade100,
-                                                                endColor:
-                                                                    Colors.red,
+                                                                endColor: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        210,
+                                                                        253,
+                                                                        80),
                                                                 courseHeadline:
                                                                     'My Bike',
                                                                 courseTitle:
