@@ -35,9 +35,9 @@ class _TakeRequestState extends State<TakeRequest> {
                       setState(() {
                         selectedDate = picked;
                       });
+                      _bikeService.confirmTakingBike(mypost.id,
+                          nowDate.toString(), selectedDate.toString());
                     }
-                    _bikeService.confirmTakingBike(
-                        mypost.id, nowDate.toString(), selectedDate.toString());
                   }
 
                   if ("${mypost['status']}" == "waiting")
