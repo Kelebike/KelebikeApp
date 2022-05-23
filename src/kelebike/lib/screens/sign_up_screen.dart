@@ -323,7 +323,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color.fromARGB(255, 241, 103, 4),
+                      Color.fromARGB(255, 74, 148, 231),
                       Color.fromARGB(255, 85, 153, 230),
                       Color.fromARGB(255, 104, 163, 231),
                       Color.fromARGB(255, 193, 213, 236),

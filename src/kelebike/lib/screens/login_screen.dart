@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginScreen> {
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF6CA8F1),
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Color(0xFF6CA8F1),
               ),
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginScreen> {
             controller: _passwordController,
             obscureText: true,
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF6CA8F1),
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Color(0xFF6CA8F1),
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -309,7 +309,7 @@ class _LoginPageState extends State<LoginScreen> {
                   Color.fromARGB(255, 193, 213, 236),
                   Color.fromARGB(255, 104, 163, 231),
                   Color.fromARGB(255, 85, 153, 230),
-                  Color.fromARGB(255, 241, 103, 4),
+                  Color.fromARGB(255, 74, 148, 231),
                 ],
                 stops: [0.1, 0.4, 0.6, 0.9],
               ),

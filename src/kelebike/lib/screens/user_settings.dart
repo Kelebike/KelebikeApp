@@ -20,7 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFF6CA8F1).withOpacity(0.7),
+        backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text("Settings"),
         centerTitle: true,

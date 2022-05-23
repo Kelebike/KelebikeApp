@@ -18,7 +18,9 @@ class CustomTabBar extends StatelessWidget {
           Expanded(
             child: CustomTabBarButton(
               text: "Take Request",
-              textColor: index == 0 ? Colors.white : Colors.grey,
+              textColor: index == 0
+                  ? Colors.white
+                  : Color.fromARGB(255, 202, 200, 200),
               borderColor: index == 0 ? Colors.transparent : Colors.transparent,
               borderWidth: index == 0 ? 3 : 0,
             ),
@@ -26,7 +28,9 @@ class CustomTabBar extends StatelessWidget {
           Expanded(
             child: CustomTabBarButton(
               text: "Return Request",
-              textColor: index == 1 ? Colors.white : Colors.grey,
+              textColor: index == 1
+                  ? Colors.white
+                  : Color.fromARGB(255, 202, 200, 200),
               borderColor: index == 1 ? Colors.transparent : Colors.transparent,
               borderWidth: index == 1 ? 3 : 0,
             ),

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelebike/utilities/constants.dart';
 import 'package:kelebike/widgets/my_horizontal_list.dart';
+import 'package:string_validator/string_validator.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -183,11 +184,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ? CircularProgressIndicator()
                                   : Column(
                                       children: [
-                                        //_buildAvailable(),
-                                        //_test(),
-                                        //IconButton( onPressed: () { print("pressed");},
-                                        //icon: Icon(Icons.calendar_month),
-                                        //color: Colors.black),
                                         Container(
                                           height: size.height * 0.6,
                                           color:
