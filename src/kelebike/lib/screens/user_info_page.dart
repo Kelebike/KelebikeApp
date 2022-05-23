@@ -230,7 +230,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                 courseTitle:
                                                                     'Bike code: \n' +
                                                                         '${mypost['code']}\n\n' +
-                                                                        'Lock : \nTODO!!',
+                                                                        'Lock : \n0000',
                                                                 courseImage:
                                                                     'assets/logos/bike_woman.png',
                                                                 scale: 1.4,
@@ -241,12 +241,18 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                 children: [
                                                                   MyHorizontalList(
                                                                     width: 246,
-                                                                    startColor: Colors
-                                                                        .orange
-                                                                        .shade100,
-                                                                    endColor:
-                                                                        Colors
-                                                                            .red,
+                                                                    startColor:
+                                                                        Color.fromARGB(
+                                                                            255,
+                                                                            131,
+                                                                            240,
+                                                                            226),
+                                                                    endColor: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            162,
+                                                                            229,
+                                                                            238),
                                                                     courseHeadline:
                                                                         'Remaining Time',
                                                                     courseTitle: 'Issued: \n' +
@@ -318,9 +324,11 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                       startColor: Colors
                                                                           .orange
                                                                           .shade100,
-                                                                      endColor:
-                                                                          Colors
-                                                                              .red,
+                                                                      endColor: Color.fromARGB(
+                                                                          255,
+                                                                          235,
+                                                                          90,
+                                                                          208),
                                                                       courseHeadline:
                                                                           'Bike availability',
                                                                       courseTitle:
@@ -377,7 +385,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                           MyHorizontalList(
                             width: 246,
                             startColor: Colors.orange.shade100,
-                            endColor: Colors.red,
+                            endColor: Color.fromARGB(255, 206, 244, 54),
                             courseHeadline: 'Bike availability',
                             courseTitle: 'NUMBER OF \nAVAILABLE\nBIKE',
                             courseImage: 'assets/logos/available.png',
@@ -432,9 +440,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                   startColor: Colors
                                                                       .orange
                                                                       .shade100,
-                                                                  endColor:
-                                                                      Colors
-                                                                          .red,
+                                                                  endColor: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          144,
+                                                                          233,
+                                                                          100),
                                                                   courseHeadline:
                                                                       'Bike availability',
                                                                   courseTitle:
