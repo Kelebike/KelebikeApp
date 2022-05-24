@@ -1,24 +1,14 @@
-<<<<<<< Updated upstream
 import 'package:firebase_auth/firebase_auth.dart';
-=======
->>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelebike/service/history_service.dart';
 
 class AdminHistoryScreen extends StatefulWidget {
   @override
-<<<<<<< Updated upstream
-  _AdminHistoryScreen createState() => _AdminHistoryScreen();
-}
-
-class _AdminHistoryScreen extends State<AdminHistoryScreen> {
-=======
- _AdminHistoryScreenState createState() => _AdminHistoryScreenState();
+  _AdminHistoryScreenState createState() => _AdminHistoryScreenState();
 }
 
 class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
->>>>>>> Stashed changes
   HistoryService _historyService = HistoryService();
   Color isTaken(String taken) {
     if (taken == "taken") {
@@ -40,10 +30,7 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     User? _user = FirebaseAuth.instance.currentUser;
-=======
->>>>>>> Stashed changes
     var size = MediaQuery.of(context).size;
 
     return StreamBuilder<QuerySnapshot>(
@@ -57,10 +44,6 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
                   DocumentSnapshot mypost = snaphot.data!.docs[index];
                   String _bike = "${mypost['bike']}";
                   var infoBike = parse(_bike);
-<<<<<<< Updated upstream
-=======
-                  print(infoBike[1]);
->>>>>>> Stashed changes
                   Future<void> _showChoiseDialog(BuildContext context) {
                     return showDialog(
                         context: context,
