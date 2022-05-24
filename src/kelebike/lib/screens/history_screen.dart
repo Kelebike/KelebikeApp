@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelebike/service/history_service.dart';
 import 'package:kelebike/widgets/my_vertical_list.dart';
 
+import '../service/auth.dart';
+
 class HistoryScreen extends StatefulWidget {
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
