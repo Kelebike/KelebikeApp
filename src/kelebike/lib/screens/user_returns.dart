@@ -82,6 +82,17 @@ class _ReturnQRPageState extends State<ReturnQRPage> {
                     builder: (_) => AlertDialog(
                           title: Text('Error'),
                           content: Text('You already have a request.'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               } else if (await _bikeService
                       .findWithMail(_user!.email.toString()) !=
@@ -91,6 +102,17 @@ class _ReturnQRPageState extends State<ReturnQRPage> {
                     builder: (_) => AlertDialog(
                           title: Text('Error'),
                           content: Text('You have no bike.'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               } else if (docID == null) {
                 print(docID);
@@ -99,6 +121,17 @@ class _ReturnQRPageState extends State<ReturnQRPage> {
                     builder: (_) => AlertDialog(
                           title: Text('Error'),
                           content: Text('Bike not found!'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               } else {
                 await _bikeService.returnBike(_returnBarcode);
@@ -108,6 +141,17 @@ class _ReturnQRPageState extends State<ReturnQRPage> {
                     builder: (_) => AlertDialog(
                           title: Text('Request Succesfull'),
                           content: Text('Your return request has been sent...'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               }
             },

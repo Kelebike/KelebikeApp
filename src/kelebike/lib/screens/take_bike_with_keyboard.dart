@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kelebike/screens/home_screen.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -91,6 +94,18 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
                               content: Text('You already have a request.'),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   } else if (await _bikeService
                           .findWithBikeCode(_bikeCodeController.text) ==
@@ -100,6 +115,18 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
                               content: Text('Bike not found!'),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   } else if (await _bikeService
                           .isThisBikeTaken(_bikeCodeController.text) ==
@@ -109,6 +136,18 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
                               content: Text('This bike is already taken!'),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   } else {
                     _bikeService.takeBike(
@@ -118,11 +157,23 @@ class _TakeBikeKeyboardPageState extends State<TakeBikeKeyboardPage> {
                         builder: (_) => AlertDialog(
                               title: Text('Request successfull'),
                               content: Text('Your request has been sent...'),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   }
                 },
                 child: Text("Take a bike"),
-              )
+              ),
             ],
           ),
         ),

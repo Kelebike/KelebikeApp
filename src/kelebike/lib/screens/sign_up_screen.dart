@@ -34,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF6CA8F1),
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -42,7 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Color(0xFF6CA8F1),
               ),
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
@@ -70,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             controller: _passwordController,
             obscureText: true,
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF6CA8F1),
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Color(0xFF6CA8F1),
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -102,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             controller: _passswordAgainController,
             obscureText: true,
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF6CA8F1),
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Color(0xFF6CA8F1),
               ),
               hintText: 'Enter your Password Again',
               hintStyle: kHintTextStyle,
@@ -134,42 +134,62 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          if (_passwordController.text == _passswordAgainController.text &&
-              _emailController.text.contains('@gtu.edu.tr') &&
-              _passwordController.text.length >= 6) {
-            _authService
-                .createPerson(_emailController.text, _passwordController.text)
-                .then((value) {
-              if (value == null) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: new Text("Welcome to Kelebike"),
-                      content: new Text(
-                          "Verify email has been sent your email. Please check it!"),
-                      actions: <Widget>[
-                        new FlatButton(
-                          child: new Text("OK"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            navigateToSubPage(context);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-            });
+          if (isChecked) {
+            if (_passwordController.text == _passswordAgainController.text &&
+                _emailController.text.contains('@gtu.edu.tr') &&
+                _passwordController.text.length >= 6) {
+              _authService
+                  .createPerson(_emailController.text, _passwordController.text)
+                  .then((value) {
+                if (value == null) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: new Text("Welcome to Kelebike"),
+                        content: new Text(
+                            "Verify email has been sent your email. Please check it!"),
+                        actions: <Widget>[
+                          new FlatButton(
+                            child: new Text("OK"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              navigateToSubPage(context);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              });
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: new Text("Account couln't be created"),
+                    content: new Text(
+                        "Requirements:\n\t\t\t-Mail address must have @gtu.edu.tr extension.\n\t\t\t-Password must be at least 6 characters."),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           } else {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: new Text("Account couln't be created"),
-                  content: new Text(
-                      "Requirements:\n\t\t\t-Mail address must have @gtu.edu.tr extension.\n\t\t\t-Password must be at least 6 characters."),
+                  title: new Text("Warning!"),
+                  content: new Text("You have accept the bike delivery terms."),
                   actions: <Widget>[
                     new FlatButton(
                       child: new Text("OK"),
@@ -222,7 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     contentPadding: EdgeInsets.only(left: 25, right: 25),
-                    title: Center(child: Text("Bisklet Teslim Tutanağı")),
+                    title: Center(child: Text("Bisiklet Teslim Tutanağı")),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     content: Container(
@@ -271,7 +291,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           });
         },
         title: Text(
-          'I have read and accept the bike delivery terms.',
+          'I have accept the bike delivery terms.',
           style: TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),

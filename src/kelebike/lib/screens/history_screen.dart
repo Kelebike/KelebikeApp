@@ -34,6 +34,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     User? _user = FirebaseAuth.instance.currentUser;
     var size = MediaQuery.of(context).size;
 
+
     return StreamBuilder<QuerySnapshot>(
       stream: _historyService.getHistory(),
       builder: (context, snaphot) {

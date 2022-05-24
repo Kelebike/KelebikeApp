@@ -76,6 +76,17 @@ class _TakeBikePageState extends State<TakeBikePage> {
                     builder: (_) => AlertDialog(
                           title: Text('Error'),
                           content: Text('You already have a request.'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               } else if (await _bikeService.findWithBikeCode(_barcode!) ==
                   null) {
@@ -91,6 +102,17 @@ class _TakeBikePageState extends State<TakeBikePage> {
                     builder: (_) => AlertDialog(
                           title: Text('Error'),
                           content: Text('This bike is already taken!'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               } else {
                 _bikeService.takeBike(_barcode, _user!.email.toString());
@@ -99,6 +121,17 @@ class _TakeBikePageState extends State<TakeBikePage> {
                     builder: (_) => AlertDialog(
                           title: Text('Request successfull'),
                           content: Text('Your take request has been sent...'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                              },
+                            ),
+                          ],
                         ));
               }
             },

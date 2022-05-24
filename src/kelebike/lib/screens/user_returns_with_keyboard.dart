@@ -8,6 +8,8 @@ import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/service/history_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 
+import 'home_screen.dart';
+
 class Return extends StatefulWidget {
   @override
   _ReturnState createState() => _ReturnState();
@@ -98,6 +100,18 @@ class _ReturnState extends State<Return> {
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
                               content: Text('You already have a request.'),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   } else if (await _bikeService
                           .findWithMail(_user!.email.toString()) !=
@@ -107,6 +121,18 @@ class _ReturnState extends State<Return> {
                         builder: (_) => AlertDialog(
                               title: Text('Error'),
                               content: Text('You have no bike.'),
+                              actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   } else if (docID == null) {
                     showDialog(
@@ -123,6 +149,18 @@ class _ReturnState extends State<Return> {
                               title: Text('Request Succesfull'),
                               content:
                                   Text('Your return request has been sent...'),
+                                  actions: <Widget>[
+                                new FlatButton(
+                                  child: new Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                ),
+                              ],
                             ));
                   }
                 },
