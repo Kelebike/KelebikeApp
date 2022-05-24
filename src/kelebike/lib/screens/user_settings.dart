@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/service/auth.dart';
+import 'package:kelebike/service/localization_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -11,9 +13,19 @@ class SettingsScreen extends StatefulWidget {
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
+String currentLanguage(String lang) {
+  if (lang == "tr") {
+    return "Türkçe";
+  } else if (lang == "en") {
+    return "English";
+  } else
+    return "Change language";
+}
+
 class _SettingsScreenState extends State<SettingsScreen> {
   User? _user = FirebaseAuth.instance.currentUser;
   AuthService _authService = AuthService();
+  final localizationController = Get.find<LocalizationController>();
   bool _toggle = false;
   @override
   Widget build(BuildContext context) {
@@ -22,18 +34,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
-        title: Text("Settings"),
+        title: Text(
+          LocalizationService.of(context).translate('settings')!,
+        ),
         centerTitle: true,
       ),
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('Common'),
+            title: Text(LocalizationService.of(context).translate('common')!),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
+                onPressed: (value) {
+                  localizationController.toggleLanguage();
+                },
                 leading: Icon(Icons.language),
-                title: Text('Language'),
-                value: Text('English'),
+                title: Text(
+                    LocalizationService.of(context).translate('language')!),
+                value: Text(currentLanguage(
+                    localizationController.currentLanguage.toString())),
               ),
               SettingsTile.switchTile(
                 initialValue: _toggle,
@@ -43,11 +62,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                 },
                 leading: Icon(Icons.notifications),
-                title: Text('Enable notifications'),
+                title: Text(
+                    LocalizationService.of(context).translate('enable_not')!),
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.exit_to_app),
-                title: Text('Sign out'),
+                title: Text(
+                    LocalizationService.of(context).translate('sign_out')!),
                 onPressed: (context) {
                   _authService.signOut();
                   Navigator.pop(context);

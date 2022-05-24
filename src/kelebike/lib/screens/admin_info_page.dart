@@ -92,7 +92,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             scale: 14,
                                           );
                                         } else {
-                                          return Text('Calculating answer...');
+                                          return CircularProgressIndicator();
                                         }
                                       },
                                     ),
@@ -120,7 +120,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             scale: 1.8,
                                           );
                                         } else {
-                                          return Text('Calculating answer...');
+                                          return CircularProgressIndicator();
                                         }
                                       },
                                     ),
@@ -149,7 +149,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             scale: 8,
                                           );
                                         } else {
-                                          return Text('Calculating answer...');
+                                          return CircularProgressIndicator();
                                         }
                                       },
                                     ),
@@ -178,7 +178,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             scale: 16,
                                           );
                                         } else {
-                                          return Text('Calculating answer...');
+                                          return CircularProgressIndicator();
                                         }
                                       },
                                     ),
@@ -203,7 +203,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             scale: 9,
                                           );
                                         } else {
-                                          return Text('Calculating answer...');
+                                          return CircularProgressIndicator();
                                         }
                                       },
                                     ),
@@ -228,7 +228,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             scale: 8,
                                           );
                                         } else {
-                                          return Text('Calculating answer...');
+                                          return CircularProgressIndicator();
                                         }
                                       },
                                     ),

@@ -70,7 +70,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                       : Color.fromARGB(255, 158, 60, 53),
                                 );
                               } else {
-                                return Text('Loading...');
+                                return CircularProgressIndicator();
                               }
                             },
                           ),
@@ -332,8 +332,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                           1.8,
                                                                     );
                                                                   } else {
-                                                                    return Text(
-                                                                        'Calculating answer...');
+                                                                    return CircularProgressIndicator();
                                                                   }
                                                                 },
                                                               ),
@@ -445,8 +444,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                   scale: 1.8,
                                                                 );
                                                               } else {
-                                                                return Text(
-                                                                    'Calculating answer...');
+                                                                return CircularProgressIndicator();
                                                               }
                                                             },
                                                           ),
