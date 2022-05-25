@@ -28,6 +28,96 @@ class _TakeBikePageState extends State<TakeBikePage> {
   bool toggle = false;
   @override
   Widget build(BuildContext context) {
+    var _LockController = TextEditingController();
+    Widget _buildLock() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Code:',
+            style: kLabelStyle,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            decoration: kBoxDecorationStyle,
+            height: 60.0,
+            child: TextField(
+              controller: _LockController,
+              keyboardType: TextInputType.phone,
+              style: TextStyle(
+                color: Colors.blue,
+                fontFamily: 'OpenSans',
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 14.0),
+                prefixIcon: Icon(
+                  Icons.lock,
+                  color: Colors.blue,
+                ),
+                hintText: 'Lock',
+                hintStyle: kHintTextStyle,
+              ),
+            ),
+          )
+        ],
+      );
+    }
+
+    Future<void> _takeInCirculation(
+        BuildContext context, String barcode) async {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: SizedBox(
+                  height: 205,
+                  child: Column(
+                    children: [
+                      Text("This bike is already taken."),
+                      _buildLock(),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 25),
+                        width: double.infinity,
+                        child: RaisedButton(
+                          elevation: 5,
+                          onPressed: () async {
+                            String? bikeLock = await _bikeService.getLock(
+                                barcode, _LockController.text);
+                            if (bikeLock != null) {
+                              await _bikeService.updateOwner(
+                                  barcode,
+                                  _user!.email.toString(),
+                                  DateTime.now().toString());
+                            }
+                            Navigator.pop(context);
+                          },
+                          padding: EdgeInsets.all(15.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          color: Colors.white,
+                          child: Text(
+                            'Take Bike',
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              letterSpacing: 1.5,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+            );
+          });
+    }
+
     return Scaffold(
       backgroundColor: Color(0xFF6CA8F1),
       appBar: AppBar(
@@ -97,23 +187,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
                           content: Text('Bike not found!'),
                         ));
               } else if (await _bikeService.isThisBikeTaken(_barcode) == null) {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                          title: Text('Error'),
-                          content: Text('This bike is already taken!'),
-                          actions: <Widget>[
-                            new FlatButton(
-                              child: new Text("OK"),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
-                              },
-                            ),
-                          ],
-                        ));
+                _takeInCirculation(context, _barcode);
               } else {
                 _bikeService.takeBike(_barcode, _user!.email.toString());
                 showDialog(

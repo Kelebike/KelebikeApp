@@ -74,6 +74,16 @@ class BikeService {
     return query.docs.first.id;
   }
 
+  Future<String?> getLock(String code, String lock) async {
+    QuerySnapshot query = await FirebaseFirestore.instance
+        .collection("Bike")
+        .where('code', isEqualTo: code)
+        .where('lock', isEqualTo: lock)
+        .get();
+    if (query.docs.isEmpty) return null;
+    return query.docs.first.id;
+  }
+
   Future<String?> isThisBikeTaken(String code) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
@@ -168,6 +178,23 @@ class BikeService {
         .doc(docId)
         .update({
           'status': "waiting",
+          'owner': owner,
+        })
+        .then((_) => print('Updated'))
+        .catchError((error) {
+          flag = false;
+        });
+    return flag;
+  }
+
+  Future<bool> updateOwner(String bikeCode, String owner, String issued) async {
+    String? docId = await findWithBikeCode(bikeCode);
+    bool flag = true;
+    var ref = _firestore
+        .collection("Bike")
+        .doc(docId)
+        .update({
+          'issued': issued,
           'owner': owner,
         })
         .then((_) => print('Updated'))
