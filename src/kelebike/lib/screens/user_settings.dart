@@ -48,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsTile.navigation(
                 onPressed: (value) {},
                 leading: Icon(Icons.person),
-                title: Text("Account"), //todo
+                title: Text(LocalizationService.of(context).translate('acnt')!),
                 value: Text(_user!.email.toString()),
               ),
             ],

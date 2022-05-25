@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_countdown_timer/index.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kelebike/model/bike.dart';
@@ -7,6 +8,7 @@ import 'package:kelebike/screens/take_bike_page.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kelebike/service/localization_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 import 'package:kelebike/widgets/my_horizontal_list.dart';
 import 'package:string_validator/string_validator.dart';
@@ -17,6 +19,7 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class _UserInfoPageState extends State<UserInfoPage> {
+  final localizationController = Get.find<LocalizationController>();
   BikeService _bikeService = BikeService();
 
   bool available(String nm) {
@@ -181,7 +184,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
             children: [
               Icon(Icons.arrow_back),
               Text(
-                " Give back the bike!",
+                LocalizationService.of(context).translate('gv_bck_bike')!,
               ),
             ],
           )),
@@ -228,10 +231,14 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                 255, 193, 218, 241),
                                             endColor: Color.fromARGB(
                                                 255, 24, 106, 228),
-                                            courseHeadline: 'Bike availability',
-                                            courseTitle:
-                                                'NUMBER OF \nAVAILABLE\nBIKE : ' +
-                                                    '${snapshot.data}',
+                                            courseHeadline:
+                                                LocalizationService.of(context)
+                                                    .translate('bike_avail')!,
+                                            courseTitle: LocalizationService.of(
+                                                        context)
+                                                    .translate(
+                                                        'numb_of_avail_bikes_c')! +
+                                                '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/available.png',
                                             scale: 2.2,
@@ -345,11 +352,15 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                             245,
                                                                             180,
                                                                             30),
-                                                                    courseHeadline:
-                                                                        'My Bike',
-                                                                    courseTitle: 'Bike code: \n' +
+                                                                    courseHeadline: LocalizationService.of(
+                                                                            context)
+                                                                        .translate(
+                                                                            'my_bike')!,
+                                                                    courseTitle: LocalizationService.of(context).translate(
+                                                                            'bike_code_c_n')! +
                                                                         '${mypost['code']}\n' +
-                                                                        'Lock : \n' +
+                                                                        LocalizationService.of(context)
+                                                                            .translate('lock')! +
                                                                         '${mypost['lock']}',
                                                                     courseImage:
                                                                         'assets/logos/bike_woman.png',
@@ -376,11 +387,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                             95,
                                                                             229),
                                                                         courseHeadline:
-                                                                            'Remaining Time',
-                                                                        courseTitle: 'Issued: \n' +
+                                                                            LocalizationService.of(context).translate('rmn_time_n')!,
+                                                                        courseTitle: LocalizationService.of(context).translate('issued')! +
                                                                             '${mypost['issued']}'.substring(0,
                                                                                 11) +
-                                                                            '\nReturn :\n' +
+                                                                            LocalizationService.of(context).translate(
+                                                                                'n_rtrn_n')! +
                                                                             '${mypost['return']}'.substring(0,
                                                                                 11),
                                                                         courseImage:

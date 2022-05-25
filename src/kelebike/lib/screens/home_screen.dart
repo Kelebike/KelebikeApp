@@ -13,6 +13,7 @@ import 'package:kelebike/screens/user_settings.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
+import '../service/localization_service.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
