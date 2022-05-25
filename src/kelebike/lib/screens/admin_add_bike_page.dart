@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/screens/admin_bikes_screen.dart';
+import 'package:kelebike/screens/admin_screen.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
@@ -76,7 +77,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
           height: 60.0,
           child: TextField(
             controller: _CodeController,
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.phone,
             style: TextStyle(
               color: Colors.blue,
               fontFamily: 'OpenSans',
@@ -114,8 +115,8 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               owner: 'nontaken');
           Navigator.pop(context);
           Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminBikesScreen()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AdminScreen()));
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(

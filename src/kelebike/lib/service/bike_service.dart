@@ -218,7 +218,7 @@ class BikeService {
   }
 
   Future<bool> confirmTakingBike(
-      String docId, String issued, String returned) async {
+      String docId, String issued, String returned, String lock) async {
     bool flag = true;
     var ref = _firestore
         .collection("Bike")
@@ -227,6 +227,7 @@ class BikeService {
           'status': "taken",
           'issued': issued,
           'return': returned,
+          'lock': lock,
         })
         .then((_) => print('Updated'))
         .catchError((error) {

@@ -27,28 +27,11 @@ class _RequestsState extends State<Requests> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot mypost = snaphot.data!.docs[index];
 
-                  Future<void> _selectDate(BuildContext context) async {
-                    final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: selectedDate,
-                        firstDate: DateTime(2015, 8),
-                        lastDate: DateTime(2101));
-                    if (picked != null && picked != selectedDate) {
-                      setState(() {
-                        selectedDate = picked;
-                      });
-                    }
-                    _bikeService.confirmTakingBike(
-                        mypost.id, nowDate.toString(), selectedDate.toString());
-                  }
-
                   if ("${mypost['status']}" == "waiting")
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
-                        onTap: () {
-                          _selectDate(context);
-                        },
+                        onTap: () {},
                         child: Container(
                           height: size.height * .3,
                           decoration: BoxDecoration(
