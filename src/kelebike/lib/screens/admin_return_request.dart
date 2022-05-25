@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kelebike/service/blacklist_service.dart';
 import 'package:kelebike/service/history_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 
@@ -11,7 +13,9 @@ class ReturnRequest extends StatefulWidget {
 
 class _ReturnRequestState extends State<ReturnRequest> {
   HistoryService _historyService = HistoryService();
+  var _blackListService = BlackListService();
   BikeService _bikeService = BikeService();
+  User? _user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -76,6 +80,9 @@ class _ReturnRequestState extends State<ReturnRequest> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
+                                          _blackListService.addBlackList(
+                                              user: '${mypost['owner']}',
+                                              reason: "Geç getirdi aq!");
                                           Navigator.pop(context);
                                         },
                                         child: Text(

@@ -134,6 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
+          print("pressed");
           if (isChecked) {
             if (_passwordController.text == _passswordAgainController.text &&
                 _emailController.text.contains('@gtu.edu.tr') &&
