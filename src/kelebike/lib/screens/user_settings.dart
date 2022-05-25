@@ -42,6 +42,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: SettingsList(
         sections: [
           SettingsSection(
+            title: Text("Personal"), //todo
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                onPressed: (value) {},
+                leading: Icon(Icons.person),
+                title: Text("Account"), //todo
+                value: Text(_user!.email.toString()),
+              ),
+            ],
+          ),
+          SettingsSection(
             title: Text(LocalizationService.of(context).translate('common')!),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
