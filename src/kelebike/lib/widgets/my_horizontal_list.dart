@@ -10,19 +10,20 @@ class MyHorizontalList extends StatelessWidget {
       required this.courseTitle,
       required this.courseImage,
       required this.width,
+      required this.height,
       required this.scale})
       : super(key: key);
   final Color startColor, endColor;
   final String courseHeadline, courseTitle, courseImage;
-  final double scale, width;
+  final double scale, width, height;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10, left: 10),
+      padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
       child: Container(
         width: width,
-        height: 349,
+        height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           gradient: LinearGradient(
@@ -43,7 +44,7 @@ class MyHorizontalList extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 height: 39,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFAFA8EE),
+                  color: const Color(0xFF6CA8F1),
                   borderRadius: BorderRadius.circular(36),
                 ),
                 child: Text(
@@ -64,7 +65,7 @@ class MyHorizontalList extends StatelessWidget {
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 25,
+                  fontSize: 20,
                 ),
               ),
             ),

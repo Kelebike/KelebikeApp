@@ -136,7 +136,6 @@ class BikeService {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("Bike")
         .where('owner', isEqualTo: owner)
-        .where('status', isEqualTo: "taken")
         .get();
     return query.docs.length;
   }

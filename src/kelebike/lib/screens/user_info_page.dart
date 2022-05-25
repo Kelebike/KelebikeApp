@@ -26,123 +26,158 @@ class _UserInfoPageState extends State<UserInfoPage> {
     }
   }
 
-  Widget _buildAvailable() {
-    var size = MediaQuery.of(context).size;
-    return StreamBuilder(
-        stream: _bikeService.getBike(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (!snapshot.hasData) {
-            return CircularProgressIndicator();
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {}
-          return Center(
-            child: Container(
-              color: Color.fromARGB(255, 255, 255, 255).withOpacity(0),
-              height: size.height * 0.3,
-              width: size.width * 0.3,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    decoration: kBoxDecorationStyle,
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Align(
-                            child: Icon(Icons.pedal_bike,
-                                color: Color.fromARGB(255, 255, 255, 255)
-                                    .withOpacity(0.7))),
-                        Align(),
-                        Align(
-                          child: FutureBuilder<int>(
-                            future: _bikeService.findWithStatus("nontaken"),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
-                                return Icon(
-                                  Icons.circle,
-                                  color: available('${snapshot.data}')
-                                      ? Color.fromARGB(255, 94, 217, 12)
-                                          .withOpacity(0.7)
-                                      : Color.fromARGB(255, 158, 60, 53),
-                                );
-                              } else {
-                                return CircularProgressIndicator();
-                              }
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                      onPressed: () {}, icon: Icon(Icons.access_alarm_outlined))
-                ],
-              ),
-            ),
-          );
-        });
+  Widget takeBikeUserInfo() {
+    return Text(
+        "\n\n\nUser'ın bisikleti yok! \nTake a bike button ve bisikletin yok buraya gelecek!!");
   }
 
-  Widget _test() {
-    User? _user = FirebaseAuth.instance.currentUser;
+  Widget _buildReturnBtn(String bikeCode) {
+    var size = MediaQuery.of(context).size;
     return Container(
-        child: StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('Bike').snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot doc = snapshot.data!.docs[index];
-                if (_user!.email.toString() == doc['owner'] &&
-                    doc['status'] == 'taken') {
-                  return Container(
-                    margin: EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Text(
-                          doc['code'],
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            fontFamily: 'OpenSans',
-                            color: Colors.orange.shade100,
-                          ),
+      width: size.width * 0.65,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF6CA8F1),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            elevation: 5.0,
+          ),
+          onPressed: () {
+            Future<void> _showChoiseDialog(BuildContext context) {
+              return showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        title: Text(
+                          "Bisikleti teslim etmek istediğinize emin misiniz?",
+                          textAlign: TextAlign.center,
                         ),
-                        Text(doc['return']),
-                        Text(doc['issued']),
-                        CountdownTimer(
-                          endTime: DateTime.parse(doc['return'])
-                              .millisecondsSinceEpoch,
-                        ),
-                        _buildAvailable(),
-                        Container(
-                          width: double.infinity,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset('assets/logos/cool_bike.jpg',
-                                fit: BoxFit.fitHeight),
-                          ),
-                        ),
-                      ],
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0))),
+                        content: Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () async {
+                                    await _bikeService.returnBike(bikeCode);
+
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Evet",
+                                    style: TextStyle(
+                                        color: Color(0xFF6CA8F1),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Vazgeç",
+                                    style: TextStyle(
+                                        color: Color(0xFF6CA8F1),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            )));
+                  });
+            }
+
+            ;
+            _showChoiseDialog(context);
+          },
+          child: Row(
+            mainAxisAlignment:
+                MainAxisAlignment.center, //Center Row contents horizontally,
+            children: [
+              Icon(Icons.arrow_back),
+              Text(
+                " Give back the bike!",
+              ),
+            ],
+          )),
+    );
+  }
+
+  Widget bikeAvailable() {
+    var size = MediaQuery.of(context).size;
+    return StreamBuilder<QuerySnapshot>(
+      stream: _bikeService.getBike(),
+      builder: (context, snaphot) {
+        int flag = 0;
+        return !snaphot.hasData
+            ? CircularProgressIndicator()
+            : Column(
+                children: [
+                  Container(
+                    color: Colors.green.withOpacity(0.4),
+                    height: size.height * 0.25,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: ListView.builder(
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot mypost = snaphot.data!.docs[index];
+
+                            return SizedBox(
+                              height: size.height * .25,
+                              child: ListView.builder(
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    child: FutureBuilder<int>(
+                                      future: _bikeService
+                                          .findWithStatus("nontaken"),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<int> snapshot) {
+                                        if (snapshot.hasData) {
+                                          return MyHorizontalList(
+                                            height: size.height * 0.2,
+                                            width: size.width * 0.9,
+                                            startColor: Color.fromARGB(
+                                                255, 193, 218, 241),
+                                            endColor: Color.fromARGB(
+                                                255, 24, 106, 228),
+                                            courseHeadline: 'Bike availability',
+                                            courseTitle:
+                                                'NUMBER OF \nAVAILABLE\nBIKE : ' +
+                                                    '${snapshot.data}',
+                                            courseImage:
+                                                'assets/logos/available.png',
+                                            scale: 2.2,
+                                          );
+                                        } else {
+                                          return CircularProgressIndicator();
+                                        }
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }),
                     ),
-                  );
-                }
-                return SizedBox.shrink();
-              });
-        } else {
-          return Text("No data");
-        }
+                  ),
+                ],
+              );
       },
-    ));
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    String bikeCode = "";
     User? _user = FirebaseAuth.instance.currentUser;
     var size = MediaQuery.of(context).size;
     var taken_counter = 0;
@@ -163,352 +198,189 @@ class _UserInfoPageState extends State<UserInfoPage> {
               if (snapshot.hasData) {
                 if (available('${snapshot.data}')) {
                   return Scaffold(
+                      backgroundColor: Color(0xFF6CA8F1).withOpacity(0.4),
                       body: Column(
-                    children: [
-                      Stack(
                         children: [
-                          MyHorizontalList(
-                            width: 246,
-                            startColor: Colors.orange.shade100,
-                            endColor: Colors.red,
-                            courseHeadline: 'Bike availability',
-                            courseTitle: 'NUMBER OF \nAVAILABLE\nBIKE',
-                            courseImage: 'assets/logos/available.png',
-                            scale: 1.8,
-                          ),
-                          StreamBuilder<QuerySnapshot>(
-                            stream: _bikeService.getBike(),
-                            builder: (context, snaphot) {
-                              int flag = 0;
-                              return !snaphot.hasData
-                                  ? CircularProgressIndicator()
-                                  : Column(
-                                      children: [
-                                        Container(
-                                          height: size.height * 0.6,
-                                          color:
-                                              Colors.white.withOpacity(opacity),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: ListView.builder(
-                                                itemCount:
-                                                    snaphot.data!.docs.length,
-                                                itemBuilder: (context, index) {
-                                                  DocumentSnapshot mypost =
-                                                      snaphot.data!.docs[index];
-                                                  if ("${mypost['owner']}" ==
-                                                          _user.email
-                                                              .toString() &&
-                                                      "${mypost['status']}" ==
-                                                          "taken") {
-                                                    return SizedBox(
-                                                      height: size.height * .55,
-                                                      child: ListView.builder(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        physics:
-                                                            const BouncingScrollPhysics(),
-                                                        itemCount: 1,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          return Row(
-                                                            children: [
-                                                              MyHorizontalList(
-                                                                width: 246,
-                                                                startColor: Colors
-                                                                    .orange
-                                                                    .shade100,
-                                                                endColor: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        210,
-                                                                        253,
-                                                                        80),
-                                                                courseHeadline:
-                                                                    'My Bike',
-                                                                courseTitle:
-                                                                    'Bike code: \n' +
-                                                                        '${mypost['code']}\n\n' +
-                                                                        'Lock : \nTODO!!',
-                                                                courseImage:
-                                                                    'assets/logos/bike_woman.png',
-                                                                scale: 1.4,
-                                                              ),
-                                                              Stack(
-                                                                alignment: Alignment
-                                                                    .centerLeft,
+                          bikeAvailable(),
+                          Stack(
+                            children: [
+                              StreamBuilder<QuerySnapshot>(
+                                stream: _bikeService.getBike(),
+                                builder: (context, snaphot) {
+                                  int flag = 0;
+                                  return !snaphot.hasData
+                                      ? CircularProgressIndicator()
+                                      : Column(
+                                          children: [
+                                            Container(
+                                              height: size.height * 0.75 - 60,
+                                              color:
+                                                  Colors.green.withOpacity(0.4),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: ListView.builder(
+                                                    itemCount: snaphot
+                                                        .data!.docs.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      DocumentSnapshot mypost =
+                                                          snaphot.data!
+                                                              .docs[index];
+                                                      if ("${mypost['owner']}" ==
+                                                              _user.email
+                                                                  .toString() &&
+                                                          "${mypost['status']}" ==
+                                                              "taken") {
+                                                        bikeCode =
+                                                            '${mypost['code']}';
+                                                        return SizedBox(
+                                                          //todo!
+                                                          height: size.height *
+                                                              0.60,
+                                                          child:
+                                                              ListView.builder(
+                                                            scrollDirection:
+                                                                Axis.vertical,
+                                                            physics:
+                                                                const BouncingScrollPhysics(),
+                                                            itemCount: 1,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              return Column(
                                                                 children: [
                                                                   MyHorizontalList(
-                                                                    width: 246,
-                                                                    startColor: Colors
-                                                                        .orange
-                                                                        .shade100,
-                                                                    endColor:
-                                                                        Colors
-                                                                            .red,
+                                                                    height: 200,
+                                                                    width:
+                                                                        size.width *
+                                                                            0.9,
+                                                                    startColor:
+                                                                        Color.fromARGB(
+                                                                            255,
+                                                                            237,
+                                                                            187,
+                                                                            112),
+                                                                    endColor: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            245,
+                                                                            180,
+                                                                            30),
                                                                     courseHeadline:
-                                                                        'Remaining Time',
-                                                                    courseTitle: 'Issued: \n' +
-                                                                        '${mypost['issued']}'.substring(
-                                                                            0,
-                                                                            11) +
-                                                                        '\nReturn :\n' +
-                                                                        '${mypost['return']}'.substring(
-                                                                            0,
-                                                                            11),
+                                                                        'My Bike',
+                                                                    courseTitle:
+                                                                        'Bike code: \n' +
+                                                                            '${mypost['code']}\n' +
+                                                                            'Lock : \nTODO!!',
                                                                     courseImage:
-                                                                        'assets/logos/countdown.png',
-                                                                    scale: 1.8,
+                                                                        'assets/logos/bike_woman.png',
+                                                                    scale: 1.7,
                                                                   ),
-                                                                  CountdownTimer(
-                                                                    endTime: DateTime.parse(
-                                                                            "${mypost['return']}")
-                                                                        .millisecondsSinceEpoch,
-                                                                    widgetBuilder: (_,
-                                                                        CurrentRemainingTime?
-                                                                            time) {
-                                                                      if (time ==
-                                                                          null) {
-                                                                        return const Text(
-                                                                            ''); //time expired
-                                                                      }
-                                                                      return Text(
-                                                                        '\n\n\n    ' +
-                                                                            '${time.days}'.padLeft(2,
-                                                                                '0') +
-                                                                            ' : ' +
-                                                                            '${time.hours}'.padLeft(2,
-                                                                                '0') +
-                                                                            ' : ' +
-                                                                            '${time.min}'.padLeft(2,
-                                                                                '0') +
-                                                                            ' : ' +
-                                                                            '${time.sec}'.padLeft(2,
-                                                                                '0'),
-                                                                        style: GoogleFonts
-                                                                            .roboto(
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              25,
-                                                                        ),
-                                                                      );
-                                                                    },
+                                                                  Stack(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerLeft,
+                                                                    children: [
+                                                                      MyHorizontalList(
+                                                                        height:
+                                                                            200,
+                                                                        width: size.width *
+                                                                            .9,
+                                                                        startColor: Color.fromARGB(
+                                                                            255,
+                                                                            233,
+                                                                            187,
+                                                                            187),
+                                                                        endColor: Color.fromARGB(
+                                                                            255,
+                                                                            252,
+                                                                            95,
+                                                                            229),
+                                                                        courseHeadline:
+                                                                            'Remaining Time',
+                                                                        courseTitle: 'Issued: \n' +
+                                                                            '${mypost['issued']}'.substring(0,
+                                                                                11) +
+                                                                            '\nReturn :\n' +
+                                                                            '${mypost['return']}'.substring(0,
+                                                                                11),
+                                                                        courseImage:
+                                                                            'assets/logos/countdown.png',
+                                                                        scale:
+                                                                            2.2,
+                                                                      ),
+                                                                      CountdownTimer(
+                                                                        endTime:
+                                                                            DateTime.parse("${mypost['return']}").millisecondsSinceEpoch,
+                                                                        widgetBuilder: (_,
+                                                                            CurrentRemainingTime?
+                                                                                time) {
+                                                                          if (time ==
+                                                                              null) {
+                                                                            return const Text(''); //time expired
+                                                                          }
+                                                                          return Text(
+                                                                            '\n\n\n\n\n\n\n      ' +
+                                                                                '${time.days}'.padLeft(2, '0') +
+                                                                                ' : ' +
+                                                                                '${time.hours}'.padLeft(2, '0') +
+                                                                                ' : ' +
+                                                                                '${time.min}'.padLeft(2, '0') +
+                                                                                ' : ' +
+                                                                                '${time.sec}'.padLeft(2, '0'),
+                                                                            style:
+                                                                                GoogleFonts.roboto(
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: Color.fromARGB(255, 115, 115, 115),
+                                                                              fontSize: 20,
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                    ],
                                                                   ),
+                                                                  _buildReturnBtn(
+                                                                      bikeCode),
                                                                 ],
-                                                              ),
-                                                              FutureBuilder<
-                                                                  int>(
-                                                                future: _bikeService
-                                                                    .findWithStatus(
-                                                                        "nontaken"),
-                                                                builder: (BuildContext
-                                                                        context,
-                                                                    AsyncSnapshot<
-                                                                            int>
-                                                                        snapshot) {
-                                                                  if (snapshot
-                                                                      .hasData) {
-                                                                    return MyHorizontalList(
-                                                                      width:
-                                                                          246,
-                                                                      startColor: Colors
-                                                                          .orange
-                                                                          .shade100,
-                                                                      endColor:
-                                                                          Colors
-                                                                              .red,
-                                                                      courseHeadline:
-                                                                          'Bike availability',
-                                                                      courseTitle:
-                                                                          'NUMBER OF \nAVAILABLE\nBIKE : ' +
-                                                                              '${snapshot.data}',
-                                                                      courseImage:
-                                                                          'assets/logos/available.png',
-                                                                      scale:
-                                                                          1.8,
-                                                                    );
-                                                                  } else {
-                                                                    return CircularProgressIndicator();
-                                                                  }
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    return const SizedBox
-                                                        .shrink();
-                                                  }
-                                                }),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                            },
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      } else if (("${mypost['owner']}" ==
+                                                                  _user.email
+                                                                      .toString() &&
+                                                              "${mypost['status']}" ==
+                                                                  "waiting") ||
+                                                          ("${mypost['owner']}" ==
+                                                                  _user.email
+                                                                      .toString() &&
+                                                              "${mypost['status']}" ==
+                                                                  "returned")) {
+                                                        return Text(
+                                                            "Waiting for confirmation");
+                                                      } else {
+                                                        return const SizedBox
+                                                            .shrink();
+                                                      }
+                                                    }),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                },
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-
-                      //Image.asset('assets/logos/cool_bike.jpg', fit: BoxFit.fitHeight),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(5.0),
-                        child: Image.asset(
-                          'assets/logos/cool_bike.jpg',
-                          height: size.height * .3,
-                          width: size.width,
-                        ),
-                      )
-                    ],
-                  ));
+                      ));
                 } else {
                   // user has no bike
                   return Scaffold(
                       body: Column(
                     children: [
-                      Stack(
-                        children: [
-                          MyHorizontalList(
-                            width: 246,
-                            startColor: Colors.orange.shade100,
-                            endColor: Colors.red,
-                            courseHeadline: 'Bike availability',
-                            courseTitle: 'NUMBER OF \nAVAILABLE\nBIKE',
-                            courseImage: 'assets/logos/available.png',
-                            scale: 1.8,
-                          ),
-                          StreamBuilder<QuerySnapshot>(
-                            stream: _bikeService.getBike(),
-                            builder: (context, snaphot) {
-                              int flag = 0;
-                              return !snaphot.hasData
-                                  ? CircularProgressIndicator()
-                                  : Column(
-                                      children: [
-                                        Container(
-                                          height: size.height * 0.6,
-                                          color:
-                                              Colors.white.withOpacity(opacity),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: ListView.builder(
-                                                itemCount: 1,
-                                                itemBuilder: (context, index) {
-                                                  DocumentSnapshot mypost =
-                                                      snaphot.data!.docs[index];
-
-                                                  return SizedBox(
-                                                    height: size.height * .55,
-                                                    child: ListView.builder(
-                                                      itemCount: 1,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: FutureBuilder<
-                                                              int>(
-                                                            future: _bikeService
-                                                                .findWithStatus(
-                                                                    "nontaken"),
-                                                            builder: (BuildContext
-                                                                    context,
-                                                                AsyncSnapshot<
-                                                                        int>
-                                                                    snapshot) {
-                                                              if (snapshot
-                                                                  .hasData) {
-                                                                return MyHorizontalList(
-                                                                  width:
-                                                                      size.width *
-                                                                          0.75,
-                                                                  startColor: Colors
-                                                                      .orange
-                                                                      .shade100,
-                                                                  endColor:
-                                                                      Colors
-                                                                          .red,
-                                                                  courseHeadline:
-                                                                      'Bike availability',
-                                                                  courseTitle:
-                                                                      'NUMBER OF \nAVAILABLE\nBIKE : ' +
-                                                                          '${snapshot.data}',
-                                                                  courseImage:
-                                                                      'assets/logos/available.png',
-                                                                  scale: 1.8,
-                                                                );
-                                                              } else {
-                                                                return CircularProgressIndicator();
-                                                              }
-                                                            },
-                                                          ),
-                                                        );
-                                                        return Row(
-                                                          children: [
-                                                            FutureBuilder<int>(
-                                                              future: _bikeService
-                                                                  .findWithStatus(
-                                                                      "nontaken"),
-                                                              builder: (BuildContext
-                                                                      context,
-                                                                  AsyncSnapshot<
-                                                                          int>
-                                                                      snapshot) {
-                                                                if (snapshot
-                                                                    .hasData) {
-                                                                  return MyHorizontalList(
-                                                                    width: 300,
-                                                                    startColor: Colors
-                                                                        .orange
-                                                                        .shade100,
-                                                                    endColor:
-                                                                        Colors
-                                                                            .red,
-                                                                    courseHeadline:
-                                                                        'Bike availability',
-                                                                    courseTitle:
-                                                                        'NUMBER OF \nAVAILABLE\nBIKE : ' +
-                                                                            '${snapshot.data}',
-                                                                    courseImage:
-                                                                        'assets/logos/available.png',
-                                                                    scale: 1.8,
-                                                                  );
-                                                                } else {
-                                                                  return Text(
-                                                                      'Calculating answer...');
-                                                                }
-                                                              },
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    ),
-                                                  );
-                                                }),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                            },
-                          ),
-                        ],
-                      ),
-
-                      //Image.asset('assets/logos/cool_bike.jpg', fit: BoxFit.fitHeight),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(5.0),
-                        child: Image.asset(
-                          'assets/logos/cool_bike.jpg',
-                          height: size.height * .3,
-                          width: size.width,
-                        ),
-                      )
+                      bikeAvailable(),
+                      takeBikeUserInfo(),
                     ],
                   ));
                 }

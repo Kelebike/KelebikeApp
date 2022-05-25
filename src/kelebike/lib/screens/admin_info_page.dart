@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kelebike/utilities/constants.dart';
 import 'package:kelebike/widgets/my_horizontal_list.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AdminInfoPage extends StatefulWidget {
   @override
@@ -36,11 +35,6 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
     return StreamBuilder(
         stream: _bikeService.getBike(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          final List<ChartData> chartData = [
-            ChartData('Available', 10, Colors.white),
-            ChartData('Circulation', 0, Colors.white),
-            ChartData('Repair', 0, Colors.white)
-          ];
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
@@ -79,6 +73,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                           AsyncSnapshot<int> snapshot) {
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
+                                            height: 349,
                                             width: 246,
                                             startColor: Colors.orange.shade100,
                                             endColor: Color.fromARGB(
@@ -101,12 +96,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                           .findWithStatus("nontaken"),
                                       builder: (BuildContext context,
                                           AsyncSnapshot<int> snapshot) {
-                                        chartData[0] = (ChartData(
-                                            'Available',
-                                            toDouble('${snapshot.data}'),
-                                            Colors.white));
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
+                                            height: 349,
                                             width: 246,
                                             startColor: Colors.orange.shade100,
                                             endColor: Color.fromARGB(
@@ -129,12 +121,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                           _bikeService.findWithStatus("repair"),
                                       builder: (BuildContext context,
                                           AsyncSnapshot<int> snapshot) {
-                                        chartData[1] = (ChartData(
-                                            'Repair',
-                                            toDouble('${snapshot.data}'),
-                                            Colors.white));
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
+                                            height: 349,
                                             width: 246,
                                             startColor: Color.fromARGB(
                                                 255, 215, 212, 207),
@@ -158,12 +147,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                           _bikeService.findWithStatus("taken"),
                                       builder: (BuildContext context,
                                           AsyncSnapshot<int> snapshot) {
-                                        chartData[2] = (ChartData(
-                                            'Circulation',
-                                            toDouble('${snapshot.data}'),
-                                            Colors.white));
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
+                                            height: 349,
                                             width: 246,
                                             startColor: Color.fromARGB(
                                                 255, 225, 246, 133),
@@ -189,6 +175,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                           AsyncSnapshot<int> snapshot) {
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
+                                            height: 349,
                                             width: 246,
                                             startColor: Color.fromARGB(
                                                 255, 191, 208, 172),
@@ -214,6 +201,7 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                           AsyncSnapshot<int> snapshot) {
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
+                                            height: 349,
                                             width: 246,
                                             startColor: Color.fromARGB(
                                                 255, 240, 216, 232),
@@ -253,11 +241,4 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
           );
         });
   }
-}
-
-class ChartData {
-  ChartData(this.x, this.y, this.color);
-  final String x;
-  final double y;
-  final Color color;
 }
