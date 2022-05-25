@@ -130,7 +130,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text("   Serial Number: "),
-                                      Text("${mypost['serialNumber']}"),
+                                      Text("${mypost['lock']}"),
                                     ]),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

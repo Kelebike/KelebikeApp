@@ -11,7 +11,7 @@ class BikeService {
 
   //Bike eklemek için
   Future<Bike?> addBike(
-      {required String serialNumber,
+      {required String lock,
       required String brand,
       required String code,
       required String status,
@@ -23,7 +23,7 @@ class BikeService {
       return null;
     } else {
       var documentRef = await ref.add({
-        'serialNumber': serialNumber,
+        'lock': lock,
         'brand': brand,
         'code': code,
         'status': status,
@@ -34,7 +34,7 @@ class BikeService {
 
       return Bike(
           id: documentRef.id,
-          serialNumber: serialNumber,
+          lock: lock,
           brand: brand,
           code: code,
           status: status,

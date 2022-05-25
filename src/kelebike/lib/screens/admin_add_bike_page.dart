@@ -21,44 +21,6 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
   BikeService _bikeService = BikeService();
   User? _user = FirebaseAuth.instance.currentUser;
 
-  Widget _buildSerialNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Serial No:',
-          style: kLabelStyle,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            controller: _SerialNoController,
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.numbers,
-                color: Colors.white,
-              ),
-              hintText: 'Serial No',
-              hintStyle: kHintTextStyle,
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
   Widget _Brand() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +40,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
             controller: _BrandController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.blue,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -86,7 +48,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.bike_scooter,
-                color: Colors.white,
+                color: Colors.blue,
               ),
               hintText: 'Brand',
               hintStyle: kHintTextStyle,
@@ -116,7 +78,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
             controller: _CodeController,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.blue,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -124,7 +86,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.qr_code,
-                color: Colors.white,
+                color: Colors.blue,
               ),
               hintText: 'Code',
               hintStyle: kHintTextStyle,
@@ -143,7 +105,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
         elevation: 5,
         onPressed: () async {
           _bikeService.addBike(
-              serialNumber: _SerialNoController.text,
+              lock: 'nontaken',
               brand: _BrandController.text,
               code: _CodeController.text,
               status: 'nontaken',
@@ -207,10 +169,6 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _buildSerialNo(),
-                      SizedBox(
-                        height: 10,
-                      ),
                       _Brand(),
                       SizedBox(
                         height: 10,

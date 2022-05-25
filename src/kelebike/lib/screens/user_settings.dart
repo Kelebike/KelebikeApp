@@ -32,12 +32,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
         title: Text(
           LocalizationService.of(context).translate('settings')!,
         ),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: SettingsList(
         sections: [

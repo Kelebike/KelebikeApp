@@ -22,14 +22,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   AuthService _authService = AuthService();
   bool _rememberMe = false;
-  int index = 2;
+  int index = 1;
   int data = 0;
 
   final screens = [
     HistoryScreen(), //Mail page vs.
-    ReturnQRPage(),
     UserInfoPage(),
-    TakeBikePage(),
     SettingsScreen(),
   ];
 
@@ -53,14 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onDestinationSelected: (int index) => setState(() {
               this.index = index;
               print(data);
-              if (data == 1 && index == 3) {
-                showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                          title: Text('Error'),
-                          content: Text('You already have a request.'),
-                        ));
-              }
             }),
             destinations: const [
               NavigationDestination(
@@ -68,17 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   selectedIcon: Icon(Icons.history),
                   label: 'History'),
               NavigationDestination(
-                  icon: Icon(Icons.keyboard_double_arrow_left),
-                  selectedIcon: Icon(Icons.keyboard_double_arrow_left),
-                  label: 'Return'),
-              NavigationDestination(
                   icon: Icon(Icons.home),
                   selectedIcon: Icon(Icons.home_outlined),
                   label: 'Home'),
-              NavigationDestination(
-                  icon: Icon(Icons.directions_bike_outlined),
-                  selectedIcon: Icon(Icons.directions_bike),
-                  label: 'Take a bike'),
               NavigationDestination(
                   icon: Icon(Icons.settings),
                   selectedIcon: Icon(Icons.settings_outlined),

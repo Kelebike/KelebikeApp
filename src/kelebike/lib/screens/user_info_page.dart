@@ -3,6 +3,7 @@ import 'package:flutter_countdown_timer/index.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kelebike/model/bike.dart';
+import 'package:kelebike/screens/take_bike_page.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,8 +28,86 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   Widget takeBikeUserInfo() {
-    return Text(
-        "\n\n\nUser'ın bisikleti yok! \nTake a bike button ve bisikletin yok buraya gelecek!!");
+    var size = MediaQuery.of(context).size;
+    return Center(
+      child: SizedBox(
+        child: Column(children: [
+          SizedBox(
+            height: size.height * 0.05,
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.asset("assets/logos/man_bike.jpg"),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "There is no bike here. Let's fly like kelebike!\n",
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.15,
+          ),
+          _buildTakeBtn(),
+        ]),
+        height: size.height * 0.65,
+        width: size.width * 0.9,
+      ),
+    );
+  }
+
+  Widget waitingForConfirmation() {
+    return Center(
+      child: SizedBox(
+        child: Column(children: [
+          Text(
+            "Waiting for confirmation!\n",
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 20,
+            ),
+          ),
+          CircularProgressIndicator()
+        ]),
+        height: 200.0,
+        width: 300.0,
+      ),
+    );
+  }
+
+  Widget _buildTakeBtn() {
+    var size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width * 0.65,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF6CA8F1),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            elevation: 5.0,
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TakeBikePage()));
+          },
+          child: Row(
+            mainAxisAlignment:
+                MainAxisAlignment.center, //Center Row contents horizontally,
+            children: [
+              Icon(Icons.bike_scooter),
+              Text(
+                " Let's take a bike!",
+              ),
+            ],
+          )),
+    );
   }
 
   Widget _buildReturnBtn(String bikeCode) {
@@ -120,7 +199,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
             : Column(
                 children: [
                   Container(
-                    color: Colors.green.withOpacity(0.4),
+                    color: Colors.green.shade200,
                     height: size.height * 0.25,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
@@ -214,8 +293,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                           children: [
                                             Container(
                                               height: size.height * 0.75 - 60,
-                                              color:
-                                                  Colors.green.withOpacity(0.4),
+                                              color: Colors.green.shade200,
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 10),
@@ -269,10 +347,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                             30),
                                                                     courseHeadline:
                                                                         'My Bike',
-                                                                    courseTitle:
-                                                                        'Bike code: \n' +
-                                                                            '${mypost['code']}\n' +
-                                                                            'Lock : \nTODO!!',
+                                                                    courseTitle: 'Bike code: \n' +
+                                                                        '${mypost['code']}\n' +
+                                                                        'Lock : \n' +
+                                                                        '${mypost['lock']}',
                                                                     courseImage:
                                                                         'assets/logos/bike_woman.png',
                                                                     scale: 1.7,
@@ -320,15 +398,50 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                               null) {
                                                                             return const Text(''); //time expired
                                                                           }
+                                                                          String
+                                                                              days =
+                                                                              '${time.days}';
+
+                                                                          String
+                                                                              hours =
+                                                                              '${time.hours}';
+
+                                                                          String
+                                                                              mins =
+                                                                              '${time.min}';
+                                                                          String
+                                                                              secs =
+                                                                              '${time.sec}';
+                                                                          if (time.days ==
+                                                                              null) {
+                                                                            days =
+                                                                                "";
+                                                                          }
+                                                                          if (time.hours ==
+                                                                              null) {
+                                                                            hours =
+                                                                                "";
+                                                                          }
+                                                                          if (time.min ==
+                                                                              null) {
+                                                                            mins =
+                                                                                "";
+                                                                          }
+                                                                          if (time.sec ==
+                                                                              null) {
+                                                                            secs =
+                                                                                "";
+                                                                          }
+
                                                                           return Text(
                                                                             '\n\n\n\n\n\n\n      ' +
-                                                                                '${time.days}'.padLeft(2, '0') +
+                                                                                days.padLeft(2, '0') +
                                                                                 ' : ' +
-                                                                                '${time.hours}'.padLeft(2, '0') +
+                                                                                hours.padLeft(2, '0') +
                                                                                 ' : ' +
-                                                                                '${time.min}'.padLeft(2, '0') +
+                                                                                mins.padLeft(2, '0') +
                                                                                 ' : ' +
-                                                                                '${time.sec}'.padLeft(2, '0'),
+                                                                                secs.padLeft(2, '0'),
                                                                             style:
                                                                                 GoogleFonts.roboto(
                                                                               fontWeight: FontWeight.bold,
@@ -357,8 +470,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                       .toString() &&
                                                               "${mypost['status']}" ==
                                                                   "returned")) {
-                                                        return Text(
-                                                            "Waiting for confirmation");
+                                                        return waitingForConfirmation();
                                                       } else {
                                                         return const SizedBox
                                                             .shrink();
@@ -377,12 +489,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                 } else {
                   // user has no bike
                   return Scaffold(
+                      backgroundColor: Colors.green.shade200,
                       body: Column(
-                    children: [
-                      bikeAvailable(),
-                      takeBikeUserInfo(),
-                    ],
-                  ));
+                        children: [
+                          bikeAvailable(),
+                          takeBikeUserInfo(),
+                        ],
+                      ));
                 }
               } else {
                 return Text('Loading...');

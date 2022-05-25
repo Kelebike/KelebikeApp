@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Bike {
   String id;
-  String serialNumber;
+  String lock;
   String brand;
   String code;
   String status;
@@ -12,7 +12,7 @@ class Bike {
 
   Bike({
     required this.id,
-    required this.serialNumber,
+    required this.lock,
     required this.brand,
     required this.code,
     required this.status,
@@ -24,7 +24,7 @@ class Bike {
   factory Bike.fromSnapshot(DocumentSnapshot snapshot) {
     return Bike(
         id: snapshot.id,
-        serialNumber: snapshot["serial_number"],
+        lock: snapshot["serial_number"],
         brand: snapshot["brand"],
         code: snapshot["code"],
         status: snapshot["status"],
