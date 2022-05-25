@@ -9,6 +9,7 @@ import 'package:kelebike/screens/take_bike_page.dart';
 import 'package:kelebike/service/auth.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:kelebike/utilities/constants.dart';
+import '../service/localization_service.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -59,14 +60,18 @@ class _UserScreenState extends State<UserScreen> {
                   color: Color.fromARGB(255, 243, 92, 4).withOpacity(1.0)),
             ),
             ListTile(
-              title: Text('Bikepage'),
+              title: Text(
+                LocalizationService.of(context).translate('bikepage')!,
+              ),
               leading: Icon(Icons.pedal_bike),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text('History'),
+              title: Text(
+                LocalizationService.of(context).translate('history')!,
+              ),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
@@ -76,7 +81,9 @@ class _UserScreenState extends State<UserScreen> {
             ),
             Divider(),
             ListTile(
-              title: Text('Sign out'),
+              title: Text(
+                LocalizationService.of(context).translate('sign_out')!,
+              ),
               onTap: () {
                 _authService.signOut();
                 Navigator.pop(context);
