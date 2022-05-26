@@ -204,6 +204,22 @@ class BikeService {
     return flag;
   }
 
+  Future<bool> updateStatus(String bikeCode, String status) async {
+    String? docId = await findWithBikeCode(bikeCode);
+    bool flag = true;
+    var ref = _firestore
+        .collection("Bike")
+        .doc(docId)
+        .update({
+          'status': status,
+        })
+        .then((_) => print('Updated'))
+        .catchError((error) {
+          flag = false;
+        });
+    return flag;
+  }
+
   Future<bool> repairBike(String bikeCode, String docId) async {
     String? rep = await this.isThisBikeTaken(bikeCode);
     bool flag = true;

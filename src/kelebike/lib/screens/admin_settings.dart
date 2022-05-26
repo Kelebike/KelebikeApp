@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kelebike/screens/bikepage.dart';
+import 'package:kelebike/screens/blacklist_page.dart';
 import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,8 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:universal_html/html.dart' show AnchorElement, Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+import '../service/localization_service.dart';
 
 class AdminSettingsScreen extends StatefulWidget {
   @override
@@ -36,8 +40,34 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
       body: SettingsList(
         sections: [
           SettingsSection(
+            title: Text("Personal"), //todo
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                onPressed: (value) {},
+                leading: Icon(Icons.person),
+                title: Text("Account"),
+                value: Text(_user!.email.toString()),
+              ),
+            ],
+          ),
+          SettingsSection(
             title: Text('Common'),
             tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                leading: Icon(Icons.download),
+                title: Text('Export History'),
+                onPressed: (context) {
+                  createExcel();
+                },
+              ),
+              SettingsTile.navigation(
+                leading: Icon(Icons.dangerous),
+                title: Text('Blacklist'),
+                onPressed: (context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BlackListPage()));
+                },
+              ),
               SettingsTile.navigation(
                 leading: Icon(Icons.language),
                 title: Text('Language'),
@@ -52,13 +82,6 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
                 },
                 leading: Icon(Icons.notifications),
                 title: Text('Enable notifications'),
-              ),
-              SettingsTile.navigation(
-                leading: Icon(Icons.import_export),
-                title: Text('Export History'),
-                onPressed: (context) {
-                  createExcel();
-                },
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.exit_to_app),
@@ -76,28 +99,27 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
         ],
       ),
     );
-    
   }
-  
 }
-Future<void> createExcel() async {
-    final Workbook workbook = Workbook();
-    final Worksheet sheet = workbook.worksheets[0];
-    sheet.getRangeByName('A1').setText('Hello World!');
-    final List<int> bytes = workbook.saveAsStream();
-    workbook.dispose();
 
-    if (kIsWeb) {
-      AnchorElement(
-          href:
-              'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
-        ..setAttribute('download', 'Output.xlsx')
-        ..click();
-    } else {
-      final String path = (await getApplicationSupportDirectory()).path;
-      final String fileName = '$path/Output.xlsx';
-      final File file = File(fileName);
-      await file.writeAsBytes(bytes, flush: true);
-      OpenFile.open(fileName);
-    }
+Future<void> createExcel() async {
+  final Workbook workbook = Workbook();
+  final Worksheet sheet = workbook.worksheets[0];
+  sheet.getRangeByName('A1').setText('Hello World!');
+  final List<int> bytes = workbook.saveAsStream();
+  workbook.dispose();
+
+  if (kIsWeb) {
+    AnchorElement(
+        href:
+            'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
+      ..setAttribute('download', 'Output.xlsx')
+      ..click();
+  } else {
+    final String path = (await getApplicationSupportDirectory()).path;
+    final String fileName = '$path/Output.xlsx';
+    final File file = File(fileName);
+    await file.writeAsBytes(bytes, flush: true);
+    OpenFile.open(fileName);
   }
+}

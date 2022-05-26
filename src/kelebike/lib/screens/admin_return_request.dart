@@ -15,7 +15,82 @@ class _ReturnRequestState extends State<ReturnRequest> {
   HistoryService _historyService = HistoryService();
   var _blackListService = BlackListService();
   BikeService _bikeService = BikeService();
+  var _reasonController = TextEditingController();
   User? _user = FirebaseAuth.instance.currentUser;
+
+  Future<void> _buildBlackList(BuildContext context, String user) async {
+    print(user);
+    Widget _buildReason() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Reason:',
+            style: kLabelStyle,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            margin: EdgeInsets.all(12),
+            height: 5 * 24.0,
+            child: TextField(
+              controller: _reasonController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                hintText: "Enter the reason...",
+                fillColor: Colors.grey[300],
+                filled: true,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.blue,
+            content: SizedBox(
+                height: 305,
+                child: Column(
+                  children: [
+                    _buildReason(),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 25),
+                      width: double.infinity,
+                      child: RaisedButton(
+                        elevation: 5,
+                        onPressed: () async {
+                          _blackListService.addBlackList(
+                              user: user, reason: _reasonController.text);
+                          Navigator.pop(context);
+                        },
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Colors.white,
+                        child: Text(
+                          'Add to the Blacklist',
+                          style: TextStyle(
+                            color: Color(0xFF527DAA),
+                            letterSpacing: 1.5,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -79,11 +154,9 @@ class _ReturnRequestState extends State<ReturnRequest> {
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: () {
-                                          _blackListService.addBlackList(
-                                              user: '${mypost['owner']}',
-                                              reason: "Geç getirdi aq!");
-                                          Navigator.pop(context);
+                                        onTap: () async {
+                                          _buildBlackList(
+                                              context, '${mypost['owner']}');
                                         },
                                         child: Text(
                                           "Kara Listeye Al",

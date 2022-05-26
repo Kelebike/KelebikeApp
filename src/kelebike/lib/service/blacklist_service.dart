@@ -51,7 +51,7 @@ class BlackListService {
   Future<String?> findWithEmail(String email) async {
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("BlackList")
-        .where('owner', isEqualTo: email)
+        .where('user', isEqualTo: email)
         .get();
     if (query.docs.isEmpty) return null;
     return query.docs.first.id;

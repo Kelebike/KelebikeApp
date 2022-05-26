@@ -12,13 +12,15 @@ class _BikePageState extends State<BikePage> {
   BikeService _bikeService = BikeService();
   Color isTaken(String taken) {
     if (taken == "taken") {
-      return Colors.red;
+      return Color.fromARGB(255, 0, 255, 47);
     } else if (taken == "waiting") {
       return Colors.yellow;
     } else if (taken == "nontaken") {
-      return Colors.green;
+      return Color.fromARGB(255, 84, 88, 84);
     } else if (taken == "repair") {
       return Color.fromARGB(255, 28, 7, 224);
+    } else if (taken == "expired") {
+      return Colors.red;
     } else {
       return Colors.yellow;
     }
@@ -37,6 +39,13 @@ class _BikePageState extends State<BikePage> {
                 itemCount: snaphot.data!.docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot mypost = snaphot.data!.docs[index];
+                  if ('${mypost['return']}' != "nontaken") {
+                    if (DateTime.parse('${mypost['return']}')
+                        .isBefore(DateTime.now())) {
+                      _bikeService.updateStatus('${mypost['code']}', "expired");
+                    }
+                    print('${mypost['return']}');
+                  }
 
                   Future<void> _showChoiseDialog(BuildContext context) {
                     return showDialog(

@@ -8,6 +8,7 @@ import 'package:kelebike/screens/take_bike_page.dart';
 import 'package:kelebike/service/bike_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kelebike/service/blacklist_service.dart';
 import 'package:kelebike/service/localization_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 import 'package:kelebike/widgets/my_horizontal_list.dart';
@@ -64,6 +65,48 @@ class _UserInfoPageState extends State<UserInfoPage> {
     );
   }
 
+  Widget expiredUser(String bikeCode) {
+    var size = MediaQuery.of(context).size;
+    return Center(
+      child: SizedBox(
+        child: Column(children: [
+          SizedBox(
+            height: size.height * 0.05,
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.asset("assets/logos/workshop.jpg"),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Your rental time is up!",
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 15,
+            ),
+          ),
+          Text(
+            "Please leave the bike at the workshop.\n",
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.15,
+          ),
+          _buildReturnBtn(bikeCode),
+        ]),
+        height: size.height * 0.65,
+        width: size.width * 0.9,
+      ),
+    );
+  }
+
   Widget waitingForConfirmation() {
     return Center(
       child: SizedBox(
@@ -85,6 +128,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
   }
 
   Widget _buildTakeBtn() {
+    User? _user = FirebaseAuth.instance.currentUser;
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.65,
@@ -96,9 +140,34 @@ class _UserInfoPageState extends State<UserInfoPage> {
             ),
             elevation: 5.0,
           ),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TakeBikePage()));
+          onPressed: () async {
+            var _blackListService = BlackListService();
+            String? isInBlack =
+                await _blackListService.findWithEmail(_user!.email.toString());
+            print(isInBlack);
+            if (isInBlack == null) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TakeBikePage()));
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: new Text("Opps!"),
+                    content: new Text(
+                        "You're in blacklist now. You can't take a bike..."),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
           },
           child: Row(
             mainAxisAlignment:
@@ -408,7 +477,15 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                                                 time) {
                                                                           if (time ==
                                                                               null) {
-                                                                            return const Text(''); //time expired
+                                                                            return Text(
+                                                                              '\n\n\n\n\n\n\n     Time Expired!',
+                                                                              style: GoogleFonts.roboto(
+                                                                                fontWeight: FontWeight.bold,
+                                                                                color: Color.fromARGB(255, 115, 115, 115),
+                                                                                fontSize: 20,
+                                                                              ),
+                                                                            );
+                                                                            ; //time expired
                                                                           }
                                                                           String
                                                                               days =
@@ -483,6 +560,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                               "${mypost['status']}" ==
                                                                   "returned")) {
                                                         return waitingForConfirmation();
+                                                      } else if ("${mypost['owner']}" ==
+                                                              _user.email
+                                                                  .toString() &&
+                                                          "${mypost['status']}" ==
+                                                              "expired") {
+                                                        return expiredUser(
+                                                            "${mypost['code']}");
                                                       } else {
                                                         return const SizedBox
                                                             .shrink();
