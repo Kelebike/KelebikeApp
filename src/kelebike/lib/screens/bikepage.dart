@@ -167,13 +167,13 @@ class _BikePageState extends State<BikePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Code: "),
+                              Text("Kod: "),
                               Text(
                                 "${mypost['code']} ",
                                 style: TextStyle(fontSize: 16),
                                 textAlign: TextAlign.center,
                               ),
-                              Text("   Owner: "),
+                              Text("   Sahip: "),
                               Text("${mypost['owner']}"),
                               SizedBox(
                                 height: 10,

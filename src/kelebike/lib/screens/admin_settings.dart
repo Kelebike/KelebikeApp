@@ -38,35 +38,35 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
-        title: Text("Settings"),
+        title: Text("Ayarlar"),
         centerTitle: true,
       ),
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text("Personal"), //todo
+            title: Text("Kişisel"), //todo
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 onPressed: (value) {},
                 leading: Icon(Icons.person),
-                title: Text("Account"),
+                title: Text("Hesap"),
                 value: Text(_user!.email.toString()),
               ),
             ],
           ),
           SettingsSection(
-            title: Text('Common'),
+            title: Text('Ortak'),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 leading: Icon(Icons.download),
-                title: Text('Export History'),
+                title: Text('Geçmiş Çıktısı'),
                 onPressed: (context) {
                   createExcel(_historyService.getHistory());
                 },
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.dangerous),
-                title: Text('Blacklist'),
+                title: Text('Karaliste'),
                 onPressed: (context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => BlackListPage()));
@@ -74,8 +74,8 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.language),
-                title: Text('Language'),
-                value: Text('English'),
+                title: Text('Dil'),
+                value: Text('İngilizce'),
               ),
               SettingsTile.switchTile(
                 initialValue: _toggle,
@@ -85,11 +85,11 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
                   });
                 },
                 leading: Icon(Icons.notifications),
-                title: Text('Enable notifications'),
+                title: Text('Bildirimleri Aktif Et'),
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.exit_to_app),
-                title: Text('Sign out'),
+                title: Text('Çıkış'),
                 onPressed: (context) {
                   _authService.signOut();
                   Navigator.pop(context);

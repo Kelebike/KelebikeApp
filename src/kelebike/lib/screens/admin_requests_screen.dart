@@ -29,7 +29,7 @@ class _RequestScreenState extends State<RequestScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
-        title: Text("Requests"),
+        title: Text("İstekler"),
         centerTitle: true,
       ),
       body: Column(

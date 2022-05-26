@@ -78,9 +78,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             startColor: Colors.orange.shade100,
                                             endColor: Color.fromARGB(
                                                 255, 241, 199, 33),
-                                            courseHeadline: 'Total',
+                                            courseHeadline: 'Toplam',
                                             courseTitle:
-                                                'NUMBER OF \nTOTAL\nBIKES : ' +
+                                                'TOPLAM \nBISIKLET\nSAYISI : ' +
                                                     '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/total.png',
@@ -103,9 +103,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                             startColor: Colors.orange.shade100,
                                             endColor: Color.fromARGB(
                                                 255, 54, 235, 244),
-                                            courseHeadline: 'Bike availability',
+                                            courseHeadline: 'Uygun Bisiklet',
                                             courseTitle:
-                                                'NUMBER OF \nAVAILABLE\nBIKES : ' +
+                                                'TOPLAM \nBISIKLET\nSAYISI : ' +
                                                     '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/available.png',
@@ -129,9 +129,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                                 255, 215, 212, 207),
                                             endColor:
                                                 Color.fromARGB(255, 70, 81, 87),
-                                            courseHeadline: 'Repair',
+                                            courseHeadline: 'Tamir',
                                             courseTitle:
-                                                'NUMBER \nOF BIKES \nIN REPAIR : ' +
+                                                'TOPLAM TAMİRDEKİ \nBİSİKLET\nSAYISI : ' +
                                                     '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/repair.png',
@@ -155,9 +155,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                                 255, 225, 246, 133),
                                             endColor: Color.fromARGB(
                                                 255, 0, 183, 110),
-                                            courseHeadline: 'Circulation',
+                                            courseHeadline: 'Dolaşım',
                                             courseTitle:
-                                                'NUMBER \nOF BIKES IN\nCIRCULATION : ' +
+                                                'TOPLAM DOLAŞIMDAKİ \nBİSİKLET\nSAYISI : ' +
                                                     '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/circulation.png',
@@ -181,9 +181,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                                 255, 191, 208, 172),
                                             endColor: Color.fromARGB(
                                                 255, 125, 158, 214),
-                                            courseHeadline: 'Take request',
+                                            courseHeadline: 'Alım İsteği',
                                             courseTitle:
-                                                'NUMBER \nOF TAKE\nREQUESTS : ' +
+                                                'TOPLAM \nALIM İSTEĞİ\nSAYISI : ' +
                                                     '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/take.png',
@@ -207,9 +207,9 @@ class _AdminInfoPageState extends State<AdminInfoPage> {
                                                 255, 240, 216, 232),
                                             endColor: Color.fromARGB(
                                                 255, 196, 12, 147),
-                                            courseHeadline: 'Return request',
+                                            courseHeadline: 'İade İsteği',
                                             courseTitle:
-                                                'NUMBER \nOF RETURN\nREQUESTS : ' +
+                                                'TOPLAM \nİADE İSTEĞİ\nSAYISI : ' +
                                                     '${snapshot.data}',
                                             courseImage:
                                                 'assets/logos/return.png',

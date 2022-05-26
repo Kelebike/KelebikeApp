@@ -27,7 +27,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Brand:',
+          'Marka:',
           style: kLabelStyle,
         ),
         SizedBox(
@@ -51,7 +51,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
                 Icons.bike_scooter,
                 color: Colors.blue,
               ),
-              hintText: 'Brand',
+              hintText: 'Marka',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -65,7 +65,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Code:',
+          'Kod:',
           style: kLabelStyle,
         ),
         SizedBox(
@@ -89,7 +89,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
                 Icons.qr_code,
                 color: Colors.blue,
               ),
-              hintText: 'Code',
+              hintText: 'Kod',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -124,7 +124,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
         ),
         color: Colors.white,
         child: Text(
-          'Add Bike',
+          'Bisiklet Ekle',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -144,7 +144,7 @@ class _adminAddBikePageState extends State<adminAddBikePage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
-        title: Text("Add Bike"),
+        title: Text("Bisiklet Ekle"),
         centerTitle: true,
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(

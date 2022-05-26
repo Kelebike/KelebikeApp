@@ -150,7 +150,7 @@ class _TakeRequestState extends State<TakeRequest> {
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Code: "),
+                                      Text("Kod: "),
                                       Text(
                                         "${mypost['code']} ",
                                         style: TextStyle(fontSize: 16),
@@ -160,19 +160,13 @@ class _TakeRequestState extends State<TakeRequest> {
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(" Brand: "),
+                                      Text(" Marka: "),
                                       Text("${mypost['brand']}"),
                                     ]),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("   Serial Number: "),
-                                      Text("${mypost['lock']}"),
-                                    ]),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("   Account: "),
+                                      Text("   Hesap: "),
                                       Text("${mypost['owner']}"),
                                     ]),
                                 SizedBox(
