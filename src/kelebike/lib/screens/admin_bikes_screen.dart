@@ -20,7 +20,7 @@ class _AdminBikesScreenState extends State<AdminBikesScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFF6CA8F1),
         elevation: 0,
-        title: Text("All of the Bikes"),
+        title: Text("Tüm Bisikletler"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(

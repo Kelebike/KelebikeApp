@@ -111,7 +111,7 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Bike: "),
+                              Text("Bisiklet: "),
                               Text(infoBike[0]),
                               Text(infoBike[1]),
                               Text(infoBike[2]),

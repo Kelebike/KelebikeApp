@@ -26,7 +26,7 @@ class _BlackListPageState extends State<BlackListPage> {
                 appBar: AppBar(
                   backgroundColor: Color(0xFF6CA8F1),
                   elevation: 0,
-                  title: Text("Blacklist"),
+                  title: Text("Karaliste"),
                   centerTitle: false,
                 ),
                 body: ListView.builder(
@@ -40,7 +40,7 @@ class _BlackListPageState extends State<BlackListPage> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                   title: Text(
-                                    "Do you want to remove this user from blacklist?",
+                                    "Karalisteden çıkartmak istiyor musunuz?",
                                     textAlign: TextAlign.center,
                                   ),
                                   shape: RoundedRectangleBorder(
@@ -68,7 +68,7 @@ class _BlackListPageState extends State<BlackListPage> {
                                                   Navigator.pop(context);
                                                 },
                                                 child: Text(
-                                                  "Yes",
+                                                  "Evet",
                                                   style: GoogleFonts.roboto(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.blue,
@@ -81,7 +81,7 @@ class _BlackListPageState extends State<BlackListPage> {
                                                   Navigator.pop(context);
                                                 },
                                                 child: Text(
-                                                  "No",
+                                                  "Hayır",
                                                   style: GoogleFonts.roboto(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.blue,
@@ -115,13 +115,13 @@ class _BlackListPageState extends State<BlackListPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("User: "),
+                                  Text("Kullanıcı: "),
                                   Text(
                                     "${mypost['user']} ",
                                     style: TextStyle(fontSize: 16),
                                     textAlign: TextAlign.center,
                                   ),
-                                  Text("   Reason: "),
+                                  Text("   Açıklama: "),
                                   Text("${mypost['reason']}"),
                                   SizedBox(
                                     height: 10,

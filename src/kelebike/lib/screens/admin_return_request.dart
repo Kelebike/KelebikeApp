@@ -25,7 +25,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Reason:',
+            'Açıklama:',
             style: kLabelStyle,
           ),
           SizedBox(
@@ -38,7 +38,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
               controller: _reasonController,
               maxLines: 5,
               decoration: InputDecoration(
-                hintText: "Enter the reason...",
+                hintText: "Açıklama Girin...",
                 fillColor: Colors.grey[300],
                 filled: true,
               ),
@@ -74,7 +74,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
                         ),
                         color: Colors.white,
                         child: Text(
-                          'Add to the Blacklist',
+                          'Karalisteye Ekle',
                           style: TextStyle(
                             color: Color(0xFF527DAA),
                             letterSpacing: 1.5,
@@ -193,7 +193,7 @@ class _ReturnRequestState extends State<ReturnRequest> {
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Code: "),
+                                      Text("Kod: "),
                                       Text(
                                         "${mypost['code']} ",
                                         style: TextStyle(fontSize: 16),
@@ -203,32 +203,26 @@ class _ReturnRequestState extends State<ReturnRequest> {
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(" Brand: "),
+                                      Text(" Marka: "),
                                       Text("${mypost['brand']}"),
                                     ]),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("   Serial Number: "),
-                                      Text("${mypost['lock']}"),
-                                    ]),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("   Account: "),
+                                      Text("   Hesap: "),
                                       Text("${mypost['owner']}"),
                                     ]),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("   Issued: "),
+                                      Text("   Alım: "),
                                       Text("${mypost['issued']}"
                                           .substring(0, 11)),
                                     ]),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("   Return: "),
+                                      Text("   Teslim: "),
                                       Text("${mypost['return']}"
                                           .substring(0, 11)),
                                     ]),

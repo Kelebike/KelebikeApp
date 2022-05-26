@@ -61,23 +61,23 @@ class _AdminScreenState extends State<AdminScreen> {
             NavigationDestination(
                 icon: Icon(Icons.history_outlined),
                 selectedIcon: Icon(Icons.history),
-                label: 'History'),
+                label: 'Geçmiş'),
             NavigationDestination(
                 icon: Icon(Icons.pedal_bike),
                 selectedIcon: Icon(Icons.pedal_bike),
-                label: 'Bikes'),
+                label: 'Bisikletler'),
             NavigationDestination(
                 icon: Icon(Icons.home),
                 selectedIcon: Icon(Icons.home_outlined),
-                label: 'Home'),
+                label: 'Ana Sayfa'),
             NavigationDestination(
                 icon: Icon(Icons.call_received),
                 selectedIcon: Icon(Icons.call_received),
-                label: 'Requests'),
+                label: 'İstekler'),
             NavigationDestination(
                 icon: Icon(Icons.settings),
                 selectedIcon: Icon(Icons.settings_outlined),
-                label: 'Settings'),
+                label: 'Ayarlar'),
           ],
         ),
       ),
