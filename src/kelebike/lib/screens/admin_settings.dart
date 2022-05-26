@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kelebike/screens/bikepage.dart';
 import 'package:kelebike/screens/blacklist_page.dart';
@@ -8,6 +9,8 @@ import 'package:kelebike/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kelebike/service/auth.dart';
+import 'package:kelebike/service/bike_service.dart';
+import 'package:kelebike/service/history_service.dart';
 import 'package:kelebike/utilities/constants.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,6 +29,7 @@ class AdminSettingsScreen extends StatefulWidget {
 class _AdminSettingsState extends State<AdminSettingsScreen> {
   User? _user = FirebaseAuth.instance.currentUser;
   AuthService _authService = AuthService();
+  var _historyService = HistoryService();
   bool _toggle = false;
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,7 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
                 leading: Icon(Icons.download),
                 title: Text('Export History'),
                 onPressed: (context) {
-                  createExcel();
+                  createExcel(_historyService.getHistory());
                 },
               ),
               SettingsTile.navigation(
@@ -102,7 +106,7 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
   }
 }
 
-Future<void> createExcel() async {
+Future<void> createExcel(Stream<QuerySnapshot<Object?>> docs) async {
   final Workbook workbook = Workbook();
   final Worksheet sheet = workbook.worksheets[0];
   sheet.getRangeByName('A1').setText('Hello World!');
