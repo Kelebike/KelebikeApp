@@ -65,6 +65,9 @@ dependencies:
   csv: ^5.0.1
   date_format: ^2.0.6
   intl: ^0.17.0
+  blobs: ^2.0.0
+  flutter_html: ^3.0.0-alpha.3
+  html: ^0.15.0
 
 
 dev_dependencies:

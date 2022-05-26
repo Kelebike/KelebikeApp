@@ -1,14 +1,14 @@
-import 'dart:ffi';
-import 'dart:io';
+import 'dart:convert';
+import 'dart:html' as html;
 
 import 'package:csv/csv.dart';
+import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:kelebike/service/history_service.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 List<List<String>> itemList = [];
 
@@ -80,11 +80,11 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
                     String _bike = "${mypost['bike']}";
                     var infoBike = parse(_bike);
                     itemList.add(<String>[
-                      mypost.id.toString(),
-                      infoBike[1].toString(),
-                      infoBike[0].toString(),
-                      infoBike[3].toString(),
-                      infoBike[5].toString()
+                      mypost.id,
+                      infoBike[1],
+                      infoBike[0],
+                      infoBike[3],
+                      infoBike[5]
                     ]);
 
                     return Padding(
@@ -132,15 +132,18 @@ generateCSV() async {
   print(itemList);
   String csvData = ListToCsvConverter().convert(itemList);
   DateTime now = DateTime.now();
-  String fortmattedDate = DateFormat('MM-dd-yyyy-HH-mm-ss').format(now);
-
-  if (Platform.isAndroid) {
-    String filename = 'item_export$fortmattedDate.csv';
-    final String path = (await getApplicationSupportDirectory()).path;
-    print(path);
-    final File file =
-        await (File('${path}/item_export$fortmattedDate.csv').create());
-    await file.writeAsString(csvData);
-    OpenFile.open(filename);
+  String formattedDate = DateFormat('MM-dd-yyyy-HH-mm-ss').format(now);
+  print(csvData);
+  if (kIsWeb) {
+    final bytes = utf8.encode(csvData);
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.document.createElement('a') as html.AnchorElement
+      ..href = url
+      ..style.display = 'none'
+      ..download = 'item_export_${formattedDate}.csv';
+    html.document.body!.children.add(anchor);
+    anchor.click();
+    html.Url.revokeObjectUrl(url);
   }
 }
