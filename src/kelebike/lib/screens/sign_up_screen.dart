@@ -243,7 +243,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     contentPadding: EdgeInsets.only(left: 25, right: 25),
-                    title: Center(child: Text("Bisiklet Teslim Tutanağı")),
+                    title: Center(child: Text("Bicycle Delivery Record")),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     content: Container(
@@ -254,25 +254,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Text(
-                                "Sağlık ve Spor Dairesi Başkanlığı Bisiklet Birimi tarafından verilen ve markası, modeli ve seri numarası kayıtlı bisikleti eksiksiz ve sağlam olarak teslim aldım.Bakım, onarım veya sayım gibi nedenlerle istenilen tarihte aldığım şekilde teslim edeceğim."),
+                                "I received the bike, which was given by the Department of Health and Sports Bicycle Unit and registered its brand, model and serial number, completely and intact."),
                             Text(
-                              "Bisiklet Teslim Şartları",
+                              "Bicycle Delivery Terms",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                                "1- Bisiklet kullanımı için geçici tahsis süresi 5 (beş) iş günüdür. Kullanım süresinin uzatılması durumunda kayıt yenileme işlemi tekrar yapılacaktır.  Bu işlemi yapmayan kişiye bir daha bisiklet verilmeyecektir. Bisikletler Sağlık, Kültür ve Spor Dairesi Başkanlığı Bisiklet Birimine eksiksiz teslim edilecektir"),
+                                "1- The temporary allocation period for bicycle use is 5 (five) working days. In case the usage period is extended, the registration renewal process will be done again. The person who does not do this will not be given a bike again. Bicycles will be delivered to the Bicycle Unit of the Department of Health, Culture and Sports."),
                             Text(
-                                "2- Öğrenci/personel bisikleti ancak kendi adına alabilir. Bir başka kişi adına bisiklet alınması ve işlem yapılması yasaktır. Kendi kullanımı için sadece bir bisiklet alabilir"),
+                                "2- The student/staff can only buy the bike in their own name. It is forbidden to buy a bicycle and make transactions on behalf of another person. Can only take one bike for own use"),
                             Text(
-                                "3- Öğrenci/personel teslim aldığı bisikleti teslim edeceği tarihte tüm aksesuarları ile eksiksiz, sağlam ve çalışır durumda teslim edecektir"),
+                                "3- The student/staff will deliver the received bike, complete with all its accessories, in good condition and in working condition, on the date of delivery."),
                             Text(
-                                "4- Öğrenci/personel teslim aldığı bisikleti üçüncü bir şahsa ödünç veremez, kiralayamaz veya satamaz"),
+                                "4- Student/staff cannot lend, rent or sell the bicycle they have received to a third party."),
                             Text(
-                                "5- Öğrenci/personel teslim aldığı bisikletin güvenliğinden sorumludur. Kaybolan bisikletin değerini tazmin etmek ya da yerine eş değerde yenisini alıp teslim etmekle yükümlüdür."),
+                                "5- The student/staff is responsible for the safety of the bicycle they receive. He is obliged to compensate for the value of the lost bike or to replace it with a new one of equal value."),
                             Text(
-                                "6- Öğrenci/personelin Bisiklet Kullanım Kuralları yönergesi ve Şehirlerde Güvenli Bisiklet Kullanma Kılavuzu kurallarına göre uygun kullanacaktır."),
+                                "6- Students/staff will use it in accordance with the Bicycle Usage Rules directive and Safe Cycling Guidelines in Cities.."),
                             Text(
-                                "7- Kullanıcı hatasından kaynaklandığı tespit edilen durumlarda sürüş kuralları ve güvenlik açıklamalarına ve “Şehirlerde Güvenli Bisiklet Kullanma Kılavuzu”ndaki kurallara uygun olmayan kullanımlardan dolayı oluşacak kazalar ve her türlü maddi, manevi zararlar, bisikletlerde meydana gelebilecek her türlü arıza ve onarım giderleri ile ilgili tüm masraflar kullanıcıdan tahsil edilecektir.  Hakkında ilgili mevzuat ve yönerge uyarınca işlem yapılır.")
+                                "7- In cases where it is determined to be caused by user error, all expenses related to accidents and all kinds of material and moral damages, all kinds of malfunctions and repair expenses that may occur in bicycles due to use that are not in accordance with the driving rules and safety explanations and the rules in the Safe Cycling User's Guide in Cities are collected from the user. will be. Action is taken in accordance with the relevant legislation and directive.")
                           ],
                         ),
                       ),

@@ -52,14 +52,5 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: LocalizationService.localizationsDelegate,
           );
         });
-
-    return MaterialApp(
-      title: 'Kelebike',
-      debugShowCheckedModeBanner: false,
-      home: startPage,
-      localeResolutionCallback: LocalizationService.localeResolutionCallBack,
-      supportedLocales: LocalizationService.supportedLocales,
-      localizationsDelegates: LocalizationService.localizationsDelegate,
-    );
   }
 }

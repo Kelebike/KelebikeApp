@@ -55,7 +55,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.15,
+            height: size.height * 0.01,
           ),
           _buildTakeBtn(),
         ]),
@@ -294,23 +294,18 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                           AsyncSnapshot<int> snapshot) {
                                         if (snapshot.hasData) {
                                           return MyHorizontalList(
-                                            height: size.height * 0.2,
+                                            height: size.height * 0.18,
                                             width: size.width * 0.9,
                                             startColor: Color.fromARGB(
                                                 255, 193, 218, 241),
                                             endColor: Color.fromARGB(
                                                 255, 24, 106, 228),
-                                            courseHeadline:
-                                                LocalizationService.of(context)
-                                                    .translate('bike_avail')!,
-                                            courseTitle: LocalizationService.of(
-                                                        context)
-                                                    .translate(
-                                                        'numb_of_avail_bikes_c')! +
+                                            courseHeadline: "Total",
+                                            courseTitle: "Available Bike:  " +
                                                 '${snapshot.data}',
                                             courseImage:
-                                                'assets/logos/available.png',
-                                            scale: 2.2,
+                                                'assets/logos/total.png',
+                                            scale: 30,
                                           );
                                         } else {
                                           return CircularProgressIndicator();

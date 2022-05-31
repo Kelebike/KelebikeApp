@@ -58,24 +58,12 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
             title: Text('Ortak'),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.download),
-                title: Text('Geçmiş Çıktısı'),
-                onPressed: (context) {
-                  createExcel(_historyService.getHistory());
-                },
-              ),
-              SettingsTile.navigation(
                 leading: Icon(Icons.dangerous),
                 title: Text('Karaliste'),
                 onPressed: (context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => BlackListPage()));
                 },
-              ),
-              SettingsTile.navigation(
-                leading: Icon(Icons.language),
-                title: Text('Dil'),
-                value: Text('İngilizce'),
               ),
               SettingsTile.switchTile(
                 initialValue: _toggle,
@@ -103,27 +91,5 @@ class _AdminSettingsState extends State<AdminSettingsScreen> {
         ],
       ),
     );
-  }
-}
-
-Future<void> createExcel(Stream<QuerySnapshot<Object?>> docs) async {
-  final Workbook workbook = Workbook();
-  final Worksheet sheet = workbook.worksheets[0];
-  sheet.getRangeByName('A1').setText('Hello World!');
-  final List<int> bytes = workbook.saveAsStream();
-  workbook.dispose();
-
-  if (kIsWeb) {
-    AnchorElement(
-        href:
-            'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
-      ..setAttribute('download', 'Output.xlsx')
-      ..click();
-  } else {
-    final String path = (await getApplicationSupportDirectory()).path;
-    final String fileName = '$path/Output.xlsx';
-    final File file = File(fileName);
-    await file.writeAsBytes(bytes, flush: true);
-    OpenFile.open(fileName);
   }
 }

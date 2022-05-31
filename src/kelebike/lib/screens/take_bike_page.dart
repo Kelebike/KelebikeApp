@@ -74,7 +74,7 @@ class _TakeBikePageState extends State<TakeBikePage> {
           builder: (BuildContext context) {
             return AlertDialog(
               content: SizedBox(
-                  height: 205,
+                  height: 250,
                   child: Column(
                     children: [
                       Text("This bike is already taken."),
@@ -92,8 +92,26 @@ class _TakeBikePageState extends State<TakeBikePage> {
                                   barcode,
                                   _user!.email.toString(),
                                   DateTime.now().toString());
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => AlertDialog(
+                                        title: Text('Error'),
+                                        content: Text('Lock is wrong!'),
+                                        actions: <Widget>[
+                                          new FlatButton(
+                                            child: new Text("OK"),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeScreen()));
+                                            },
+                                          ),
+                                        ],
+                                      ));
                             }
-                            Navigator.pop(context);
                           },
                           padding: EdgeInsets.all(15.0),
                           shape: RoundedRectangleBorder(

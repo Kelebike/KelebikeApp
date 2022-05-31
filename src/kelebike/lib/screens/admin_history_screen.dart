@@ -1,13 +1,6 @@
-import 'dart:convert';
-import 'dart:html' as html;
-
-import 'package:csv/csv.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:kelebike/service/history_service.dart';
 
 List<List<String>> itemList = [];
@@ -43,7 +36,6 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
         parts[3].toString().substring(8, parts[3].toString().length); //issued 3
     parts[5] =
         parts[5].toString().substring(8, parts[5].toString().length); //return 5
-    print(parts);
 
     return parts;
   }
@@ -65,7 +57,7 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.download),
         onPressed: () {
-          generateCSV();
+          //generateCSV();
         },
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -125,25 +117,5 @@ class _AdminHistoryScreenState extends State<AdminHistoryScreen> {
         },
       ),
     );
-  }
-}
-
-generateCSV() async {
-  print(itemList);
-  String csvData = ListToCsvConverter().convert(itemList);
-  DateTime now = DateTime.now();
-  String formattedDate = DateFormat('MM-dd-yyyy-HH-mm-ss').format(now);
-  print(csvData);
-  if (kIsWeb) {
-    final bytes = utf8.encode(csvData);
-    final blob = html.Blob([bytes]);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    final anchor = html.document.createElement('a') as html.AnchorElement
-      ..href = url
-      ..style.display = 'none'
-      ..download = 'item_export_${formattedDate}.csv';
-    html.document.body!.children.add(anchor);
-    anchor.click();
-    html.Url.revokeObjectUrl(url);
   }
 }
